@@ -122,6 +122,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-seri
 .wk-hdr{display:flex;align-items:center;gap:8px;margin-bottom:9px;}
 .wk-line{flex:1;height:1px;background:var(--border);}
 .wk-tag{font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);white-space:nowrap;padding:3px 9px;border:1px solid var(--border);border-radius:18px;background:var(--surface);}
+.wk-tag.past-tag{opacity:0.4;}
 .empty{text-align:center;padding:48px 20px;color:var(--muted);}
 .toggle-past-row{display:flex;align-items:center;justify-content:space-between;padding:6px 0;margin-bottom:10px;}
 .tp-btn{padding:5px 13px;border-radius:18px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-size:12px;cursor:pointer;font-family:'Noto Sans TC',sans-serif;}
@@ -367,23 +368,25 @@ function render(){
     document.getElementById('listContent').innerHTML='<div class="empty">🔍<br>找不到賽事</div>';
     return;
   }
-  // 週次分組，保留排序順序（不用Object，用array保持順序）
-  const weekOrder=[];
-  const byWeek={};
+  // 直接用日期分組，排序已經正確，插入順序就是顯示順序
+  const dateOrder=[];
+  const byDate={};
   data.forEach(e=>{
-    const d=parseDate(e.date);
-    const w=Math.ceil(d.getDate()/7);
-    const wl=['','第一週','第二週','第三週','第四週','第五週'];
-    const k=`6月 ${wl[w]}`;
-    if(!byWeek[k]){byWeek[k]=[];weekOrder.push(k);}
-    byWeek[k].push(e);
+    const k=e.date;
+    if(!byDate[k]){byDate[k]=[];dateOrder.push(k);}
+    byDate[k].push(e);
   });
   let i=0;
-  document.getElementById('listContent').innerHTML=weekOrder.map(w=>`
-    <div class="week-group">
-      <div class="wk-hdr"><div class="wk-line"></div><div class="wk-tag">${w} · ${byWeek[w].length}場</div><div class="wk-line"></div></div>
-      ${byWeek[w].map(e=>cardHTML(e,i++)).join('')}
-    </div>`).join('');
+  document.getElementById('listContent').innerHTML=dateOrder.map(dateKey=>{
+    const d=parseDate(dateKey);
+    const wd=WD[d.getDay()];
+    const md=dateKey.replace('2026/','');
+    const past=byDate[dateKey].every(e=>isPast(e));
+    return `<div class="week-group">
+      <div class="wk-hdr"><div class="wk-line"></div><div class="wk-tag${past?' past-tag':''}">${md}（${wd}） · ${byDate[dateKey].length}場</div><div class="wk-line"></div></div>
+      ${byDate[dateKey].map(e=>cardHTML(e,i++)).join('')}
+    </div>`;
+  }).join('');
 }
 
 // ── CALENDAR RENDER ──
