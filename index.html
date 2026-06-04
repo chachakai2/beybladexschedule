@@ -339,7 +339,14 @@ function render(){
     if(hidePast&&isPast(e))return false;
     if(q&&!e.store.includes(q)&&!e.addr.includes(q))return false;
     return true;
-  }).sort((a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time));
+  }).sort((a,b)=>{
+    const toNum=s=>parseInt(s.replace(/\//g,'').replace(':',''));
+    const da=toNum(a.date)*10000+toNum(a.time);
+    const db=toNum(b.date)*10000+toNum(b.time);
+    const pa=isPast(a)?1:0, pb=isPast(b)?1:0;
+    if(pa!==pb) return pa-pb; // 未結束在前，已結束在後
+    return da-db; // 同狀態則由近到遠
+  });
 
   const tc=data.filter(e=>e.region==='台中').length;
   const ch=data.filter(e=>e.region==='彰化').length;
@@ -408,9 +415,8 @@ function renderCal(){
     }
 
     const isToday=dateObj.toDateString()===today.toDateString();
-    const mm=String(dateObj.getMonth()+1).padStart(2,'0');
-    const dd=String(dateObj.getDate()).padStart(2,'0');
-    const dateStr=`${dateObj.getFullYear()}/${mm}/${dd}`;
+    // 用不補零格式，與資料一致：2026/6/3
+    const dateStr=`${dateObj.getFullYear()}/${dateObj.getMonth()+1}/${dateObj.getDate()}`;
     const evs=evMap[dateStr]||[];
     const hasEv=evs.length>0;
     const allPast=hasEv&&evs.every(e=>isPast(e));
