@@ -271,16 +271,20 @@ let hidePast=false;
 let calYear=2026, calMonth=5; // 0-indexed month = June
 
 function parseDate(dateStr){
-  // 安全解析 2026/6/7 格式，iOS Safari 相容
   const [y,m,d]=dateStr.split('/').map(Number);
   return new Date(y, m-1, d);
 }
 
+function dateToInt(dateStr){
+  // 2026/6/7 → 20260607，純數字比較不受 timezone 影響
+  const [y,m,d]=dateStr.split('/').map(Number);
+  return y*10000 + m*100 + d;
+}
+
 function isPast(e){
-  const today=new Date();
-  today.setHours(0,0,0,0);
-  const eventDay=parseDate(e.date);
-  return eventDay < today;
+  const n=new Date();
+  const todayInt=n.getFullYear()*10000+(n.getMonth()+1)*100+n.getDate();
+  return dateToInt(e.date) < todayInt;
 }
 
 function setF(k,v){
@@ -348,10 +352,15 @@ function render(){
     return true;
   }).sort((a,b)=>{
     const pa=isPast(a)?1:0, pb=isPast(b)?1:0;
-    if(pa!==pb) return pa-pb;
-    // 用parseDate轉成timestamp做正確數字比較，避免字串比較 6/7 > 6/13 的bug
-    const da=parseDate(a.date).getTime(), db=parseDate(b.date).getTime();
-    if(da!==db) return da-db;
+    if(pa!==pb) return pa-pb; // 未結束在前
+
+    // 把 2026/6/7 → 20260607 做數字比較，完全不依賴 Date 物件
+    function toInt(e){
+      const [y,m,d]=e.date.split('/').map(Number);
+      return y*10000 + m*100 + d; // 20260607
+    }
+    const da=toInt(a), db=toInt(b);
+    if(da!==db) return da-db; // 日期小的在前（6/6 < 6/7 < 6/13）
     return a.time.localeCompare(b.time);
   });
 
