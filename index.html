@@ -109,6 +109,19 @@
     background:var(--surface);border:1px solid var(--border);
     border-radius:12px;padding:14px;margin-bottom:10px;
     animation:fadeUp 0.25s ease both;
+    transition:opacity 0.2s;
+  }
+  .card.past{
+    opacity:0.38;
+    filter:grayscale(0.7);
+    border-color:rgba(255,255,255,0.04);
+  }
+  .card.past .store{color:var(--muted);}
+  .card.past .phone-link{opacity:0.4;pointer-events:none;}
+  .past-badge{
+    font-size:10px;padding:2px 7px;border-radius:20px;
+    background:rgba(255,255,255,0.06);color:var(--muted);
+    font-weight:500;white-space:nowrap;
   }
   @keyframes fadeUp{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
   .card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:8px;}
@@ -201,6 +214,11 @@
         <button class="chip" data-reg="皆可" onclick="setF('reg','皆可')">皆可</button>
         <button class="chip" data-reg="電話" onclick="setF('reg','電話')">電話</button>
       </div>
+    </div>
+
+    <div class="filter-section" style="display:flex;align-items:center;justify-content:space-between;padding:6px 0;">
+      <div style="font-size:12px;color:var(--muted);">已結束的場次</div>
+      <button id="togglePastBtn" onclick="togglePast()" style="display:flex;align-items:center;gap:6px;padding:5px 14px;border-radius:20px;border:1px solid var(--border);background:var(--surface2);color:var(--muted);font-size:12px;cursor:pointer;font-family:'Noto Sans TC',sans-serif;transition:all 0.15s;">👁 顯示</button>
     </div>
 
     <div id="content"></div>
@@ -301,12 +319,22 @@ const ALL = [
 const WD=['日','一','二','三','四','五','六'];
 let F={region:'all',type:'all',reg:'all',month:'all'};
 let curView='home';
+let hidePast=false;
 
 function getMonth(d){return d.slice(0,7);}
 
 function setF(key,val){
   F[key]=val;
   document.querySelectorAll(`[data-${key}]`).forEach(b=>b.classList.toggle('active',b.dataset[key]===val));
+  render();
+}
+
+function togglePast(){
+  hidePast=!hidePast;
+  const btn=document.getElementById('togglePastBtn');
+  btn.textContent=hidePast?'👁 顯示已結束':'🚫 隱藏已結束';
+  btn.style.color=hidePast?'var(--accent)':'var(--muted)';
+  btn.style.borderColor=hidePast?'rgba(245,200,66,0.4)':'var(--border)';
   render();
 }
 
@@ -327,8 +355,16 @@ function filtered(){
     if(F.reg!=='all'&&e.reg!==F.reg)return false;
     if(F.month!=='all'&&getMonth(e.date)!==F.month)return false;
     if(q&&!e.store.includes(q)&&!e.addr.includes(q)&&!e.region.includes(q))return false;
+    if(hidePast&&isPast(e))return false;
     return true;
   }).sort((a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time));
+}
+
+function isPast(e){
+  const [y,m,d]=e.date.split('/').map(Number);
+  const [hh,mm]=e.time.split(':').map(Number);
+  const eventTime=new Date(y,m-1,d,hh,mm,0);
+  return new Date()>eventTime;
 }
 
 function cardHTML(e,i){
@@ -340,10 +376,15 @@ function cardHTML(e,i){
   const tl=e.type.includes('公開')||e.type==='開放'?'公開 6歲↑':'通常 6~12歲';
   const regColors={現場:'#e8834a',線上:'#5b9cf6',門市社群:'#c77dff',皆可:'#52c87a',電話:'#f5c842'};
   const rc2=regColors[e.reg]||'var(--muted)';
-  return `<div class="card" style="animation-delay:${i*0.04}s">
+  const past=isPast(e);
+  return `<div class="card${past?' past':''}" style="animation-delay:${i*0.04}s">
     <div class="card-head">
       <div class="store">${e.store}</div>
-      <div class="badges"><span class="badge ${rc}">${e.region}</span><span class="badge ${tc}">${tl}</span></div>
+      <div class="badges">
+        <span class="badge ${rc}">${e.region}</span>
+        <span class="badge ${tc}">${tl}</span>
+        ${past?'<span class="past-badge">已結束</span>':''}
+      </div>
     </div>
     <div class="card-info">
       <span class="info-item">📅 ${md}（${wd}）</span>
@@ -353,7 +394,7 @@ function cardHTML(e,i){
     <div class="addr">📍 ${e.addr}</div>
     <div class="card-footer">
       <span class="reg-tag" style="color:${rc2}">● ${e.reg}</span>
-      <a class="phone-link" href="tel:${e.phone.replace(/[^\d]/g,'')}">${e.phone}</a>
+      ${past?'<span style="font-size:11px;color:var(--muted)">──</span>':`<a class="phone-link" href="tel:${e.phone.replace(/[^\d]/g,'')}">${e.phone}</a>`}
     </div>
   </div>`;
 }
