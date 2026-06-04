@@ -13,167 +13,144 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#0e0f14;--surface:#16181f;--surface2:#1e2028;
-  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);
-  --text:#e8eaf0;--muted:#7a7f94;
-  --accent:#f5c842;--tc:#5b9cf6;--ch:#52c87a;
-}
+:root{--bg:#0e0f14;--sf:#16181f;--sf2:#1e2028;--bd:rgba(255,255,255,0.07);--bd2:rgba(255,255,255,0.13);--tx:#e8eaf0;--mu:#7a7f94;--ac:#f5c842;}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-serif;font-size:14px;line-height:1.6;padding-bottom:calc(64px + env(safe-area-inset-bottom));}
+body{background:var(--bg);color:var(--tx);font-family:'Noto Sans TC',sans-serif;font-size:14px;line-height:1.6;padding-bottom:calc(64px + env(safe-area-inset-bottom));}
 
-/* HEADER */
-.hdr{
-  position:sticky;top:0;z-index:100;
-  background:rgba(14,15,20,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border);
-  padding:env(safe-area-inset-top) 14px 10px;
-  display:flex;align-items:center;gap:10px;
-}
-.logo{width:28px;height:28px;border-radius:7px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.hdr{position:sticky;top:0;z-index:100;background:rgba(14,15,20,0.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--bd);padding:env(safe-area-inset-top) 14px 10px;display:flex;align-items:center;gap:10px;}
+.logo{width:28px;height:28px;border-radius:7px;background:var(--ac);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
 .hdr-info{flex:1;}
 .hdr-title{font-size:15px;font-weight:700;}
-.hdr-sub{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;}
-.search-wrap{position:relative;}
-.search-input{background:var(--surface2);border:1px solid var(--border);border-radius:18px;padding:6px 10px 6px 28px;color:var(--text);font-size:12px;width:120px;outline:none;font-family:'Noto Sans TC',sans-serif;}
-.search-input::placeholder{color:var(--muted);}
-.s-icon{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:12px;pointer-events:none;}
+.hdr-sub{font-size:10px;color:var(--mu);font-family:'DM Mono',monospace;}
+.sw{position:relative;}
+.si{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--mu);font-size:12px;pointer-events:none;}
+.sinput{background:var(--sf2);border:1px solid var(--bd);border-radius:18px;padding:6px 10px 6px 28px;color:var(--tx);font-size:12px;width:120px;outline:none;font-family:'Noto Sans TC',sans-serif;}
+.sinput::placeholder{color:var(--mu);}
 
-/* BOTTOM NAV */
-.bnav{position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(14,15,20,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;padding-bottom:env(safe-area-inset-bottom);}
-.nb{flex:1;display:flex;flex-direction:column;align-items:center;padding:9px 4px;border:none;background:transparent;color:var(--muted);font-size:10px;cursor:pointer;gap:2px;transition:color 0.15s;font-family:'Noto Sans TC',sans-serif;}
-.nb.active{color:var(--accent);}
+.bnav{position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(14,15,20,0.97);backdrop-filter:blur(20px);border-top:1px solid var(--bd);display:flex;padding-bottom:env(safe-area-inset-bottom);}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;padding:9px 4px;border:none;background:transparent;color:var(--mu);font-size:10px;cursor:pointer;gap:2px;transition:color 0.15s;font-family:'Noto Sans TC',sans-serif;}
+.nb.active{color:var(--ac);}
 .ni{font-size:20px;line-height:1;}
 
-/* VIEWS */
-.view{display:none;}
-.view.active{display:block;}
+.view{display:none;}.view.active{display:block;}
 .main{padding:12px;}
 
-/* ── CALENDAR ── */
+/* CALENDAR */
 .cal-wrap{padding:10px;}
-.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
-.cal-title{font-size:16px;font-weight:700;font-family:'DM Mono',monospace;color:var(--text);}
-.cal-nav-btn{background:var(--surface);border:1px solid var(--border);border-radius:8px;width:32px;height:32px;color:var(--text);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
-.cal-grid-head{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:4px;}
-.cal-dow{text-align:center;font-size:11px;color:var(--muted);padding:4px 0;font-weight:500;}
+.cal-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.cal-title{font-size:16px;font-weight:700;font-family:'DM Mono',monospace;}
+.cal-nb{background:var(--sf);border:1px solid var(--bd);border-radius:8px;width:32px;height:32px;color:var(--tx);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.cal-region-chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;}
+.cal-chip{padding:4px 10px;border-radius:16px;border:1px solid var(--bd);background:var(--sf);color:var(--mu);font-size:11px;cursor:pointer;font-family:'Noto Sans TC',sans-serif;transition:all 0.15s;white-space:nowrap;}
+.cal-chip.active{background:var(--ac);color:#1a1400;border-color:var(--ac);font-weight:700;}
+.cal-head{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:3px;}
+.cal-dow{text-align:center;font-size:11px;color:var(--mu);padding:3px 0;font-weight:500;}
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}
-.cal-cell{
-  aspect-ratio:1/1.1;
-  border-radius:7px;padding:4px 3px;
-  background:var(--surface);border:1px solid var(--border);
-  cursor:default;position:relative;overflow:hidden;
-  min-height:0;
-}
-.cal-cell.has-event{cursor:pointer;border-color:rgba(255,255,255,0.15);background:var(--surface2);}
-.cal-cell.has-event:active{opacity:0.7;}
-.cal-cell.today{border-color:var(--accent) !important;border-width:1.5px;}
-.cal-cell.other-month{opacity:0.25;}
-.cal-date{font-size:10px;font-weight:700;color:var(--muted);margin-bottom:2px;font-family:'DM Mono',monospace;line-height:1;}
-.cal-cell.today .cal-date{color:var(--accent);}
-.cal-pill{
-  font-size:8px;line-height:1.3;padding:1px 3px;border-radius:3px;
-  margin-bottom:1px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
-  display:block;width:100%;
-}
-.cal-pill.tc{background:rgba(91,156,246,0.3);color:#a8ccfc;}
-.cal-pill.ch{background:rgba(82,200,122,0.3);color:#90e4b0;}
-.cal-pill.past{background:rgba(255,255,255,0.07);color:var(--muted);}
-.cal-more{font-size:8px;color:var(--muted);line-height:1.3;}
+.cal-cell{aspect-ratio:1/1.1;border-radius:6px;padding:3px;background:var(--sf);border:1px solid var(--bd);cursor:default;overflow:hidden;position:relative;}
+.cal-cell.has-ev{cursor:pointer;border-color:rgba(255,255,255,0.14);background:var(--sf2);}
+.cal-cell.today{border-color:var(--ac)!important;border-width:1.5px;}
+.cal-cell.other{opacity:0.22;}
+.cdate{font-size:10px;font-weight:700;color:var(--mu);margin-bottom:2px;font-family:'DM Mono',monospace;line-height:1;}
+.cal-cell.today .cdate{color:var(--ac);}
+.cpill{font-size:8px;line-height:1.3;padding:1px 3px;border-radius:2px;margin-bottom:1px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;display:block;width:100%;}
+.cpill.tc{background:rgba(91,156,246,0.3);color:#a8ccfc;}
+.cpill.ch{background:rgba(82,200,122,0.3);color:#90e4b0;}
+.cpill.nt{background:rgba(199,125,255,0.28);color:#d9a8ff;}
+.cpill.other-r{background:rgba(232,131,74,0.28);color:#f0b08a;}
+.cpill.past{background:rgba(255,255,255,0.07);color:var(--mu);}
+.cmore{font-size:8px;color:var(--mu);}
 
 /* MODAL */
-.modal-bg{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);align-items:flex-end;justify-content:center;}
-.modal-bg.open{display:flex;}
-.modal{background:var(--surface);border-radius:20px 20px 0 0;width:100%;max-height:85vh;overflow-y:auto;padding:16px 16px calc(16px + env(safe-area-inset-bottom));}
-.modal-handle{width:36px;height:4px;background:var(--border2);border-radius:2px;margin:0 auto 16px;}
-.modal-date{font-size:13px;color:var(--muted);margin-bottom:12px;font-family:'DM Mono',monospace;}
+.mbg{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.72);backdrop-filter:blur(4px);align-items:flex-end;justify-content:center;}
+.mbg.open{display:flex;}
+.modal{background:var(--sf);border-radius:20px 20px 0 0;width:100%;max-height:85vh;overflow-y:auto;padding:16px 16px calc(16px + env(safe-area-inset-bottom));}
+.mhandle{width:36px;height:4px;background:var(--bd2);border-radius:2px;margin:0 auto 14px;}
+.mdate{font-size:13px;color:var(--mu);margin-bottom:12px;font-family:'DM Mono',monospace;}
 
 /* CARDS */
-.card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:13px;margin-bottom:9px;transition:opacity 0.2s;}
-.card.past{opacity:0.35;filter:grayscale(0.6);}
-.card.past .store-name{color:var(--muted);}
-.c-head{display:flex;align-items:flex-start;justify-content:space-between;gap:6px;margin-bottom:8px;}
-.store-name{font-size:14px;font-weight:700;color:var(--text);}
-.badges{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;}
-.badge{font-size:10px;padding:2px 7px;border-radius:20px;font-weight:500;white-space:nowrap;}
-.badge-tc{background:rgba(91,156,246,0.15);color:var(--tc);}
-.badge-ch{background:rgba(82,200,122,0.15);color:var(--ch);}
-.badge-open{background:rgba(245,200,66,0.12);color:var(--accent);}
-.badge-past{background:rgba(255,255,255,0.06);color:var(--muted);}
-.c-info{display:flex;flex-wrap:wrap;gap:5px 12px;margin-bottom:8px;}
-.c-item{font-size:12px;color:var(--muted);}
-.c-addr{font-size:11px;color:var(--muted);padding:5px 7px;background:var(--bg);border-radius:5px;margin-bottom:8px;}
-.c-foot{display:flex;align-items:center;justify-content:space-between;}
-.reg-tag{font-size:11px;color:var(--muted);}
-.phone-link{font-family:'DM Mono',monospace;font-size:12px;color:var(--accent);text-decoration:none;padding:5px 11px;border:1px solid rgba(245,200,66,0.3);border-radius:7px;background:rgba(245,200,66,0.06);}
-.past-dash{font-size:11px;color:var(--muted);}
+.card{background:var(--sf2);border:1px solid var(--bd);border-radius:11px;padding:13px;margin-bottom:9px;}
+.card.past{opacity:0.33;filter:grayscale(0.6);}
+.card.past .sname{color:var(--mu);}
+.chead{display:flex;align-items:flex-start;justify-content:space-between;gap:6px;margin-bottom:7px;}
+.sname{font-size:14px;font-weight:700;}
+.bdgs{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;}
+.bdg{font-size:10px;padding:2px 7px;border-radius:20px;font-weight:500;white-space:nowrap;}
+.bdg-tc{background:rgba(91,156,246,0.15);color:#5b9cf6;}
+.bdg-ch{background:rgba(82,200,122,0.15);color:#52c87a;}
+.bdg-nt{background:rgba(199,125,255,0.15);color:#c77dff;}
+.bdg-ot{background:rgba(232,131,74,0.15);color:#e8834a;}
+.bdg-open{background:rgba(245,200,66,0.12);color:var(--ac);}
+.bdg-past{background:rgba(255,255,255,0.06);color:var(--mu);}
+.cinfo{display:flex;flex-wrap:wrap;gap:5px 12px;margin-bottom:7px;}
+.ci{font-size:12px;color:var(--mu);}
+.caddr{font-size:11px;color:var(--mu);padding:5px 7px;background:var(--bg);border-radius:5px;margin-bottom:7px;}
+.cfoot{display:flex;align-items:center;justify-content:space-between;}
+.rtag{font-size:11px;color:var(--mu);}
+.plink{font-family:'DM Mono',monospace;font-size:12px;color:var(--ac);text-decoration:none;padding:5px 11px;border:1px solid rgba(245,200,66,0.3);border-radius:7px;background:rgba(245,200,66,0.06);}
 
-/* HOME filters */
-.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;}
-.stat{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 6px;text-align:center;}
-.stat-num{font-size:20px;font-weight:700;font-family:'DM Mono',monospace;}
-.stat-lbl{font-size:10px;color:var(--muted);margin-top:1px;}
-.fsec{margin-bottom:11px;}
-.flbl{font-size:10px;color:var(--muted);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:7px;}
+/* LIST */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:12px;}
+.stat{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:9px 5px;text-align:center;}
+.stat-num{font-size:19px;font-weight:700;font-family:'DM Mono',monospace;}
+.stat-lbl{font-size:10px;color:var(--mu);margin-top:1px;}
+.fsec{margin-bottom:10px;}
+.flbl{font-size:10px;color:var(--mu);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:6px;}
 .chips{display:flex;gap:5px;flex-wrap:wrap;}
-.chip{padding:5px 11px;border-radius:18px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-size:12px;cursor:pointer;transition:all 0.15s;white-space:nowrap;font-family:'Noto Sans TC',sans-serif;}
-.chip.active{background:var(--accent);color:#1a1400;border-color:var(--accent);font-weight:700;}
-.week-group{margin-bottom:18px;}
-.wk-hdr{display:flex;align-items:center;gap:8px;margin-bottom:9px;}
-.wk-line{flex:1;height:1px;background:var(--border);}
-.wk-tag{font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);white-space:nowrap;padding:3px 9px;border:1px solid var(--border);border-radius:18px;background:var(--surface);}
-.wk-tag.past-tag{opacity:0.4;}
-.empty{text-align:center;padding:48px 20px;color:var(--muted);}
-.toggle-past-row{display:flex;align-items:center;justify-content:space-between;padding:6px 0;margin-bottom:10px;}
-.tp-btn{padding:5px 13px;border-radius:18px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-size:12px;cursor:pointer;font-family:'Noto Sans TC',sans-serif;}
-.tp-btn.on{color:var(--accent);border-color:rgba(245,200,66,0.4);}
+.chip{padding:5px 11px;border-radius:18px;border:1px solid var(--bd);background:var(--sf);color:var(--mu);font-size:12px;cursor:pointer;transition:all 0.15s;white-space:nowrap;font-family:'Noto Sans TC',sans-serif;}
+.chip.active{background:var(--ac);color:#1a1400;border-color:var(--ac);font-weight:700;}
+.dgrp{margin-bottom:18px;}
+.dhdr{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.dline{flex:1;height:1px;background:var(--bd);}
+.dtag{font-size:11px;font-family:'DM Mono',monospace;color:var(--mu);white-space:nowrap;padding:3px 9px;border:1px solid var(--bd);border-radius:18px;background:var(--sf);}
+.dtag.pt{opacity:0.38;}
+.tp-row{display:flex;align-items:center;justify-content:space-between;padding:5px 0;margin-bottom:10px;}
+.tp-btn{padding:5px 13px;border-radius:18px;border:1px solid var(--bd);background:var(--sf);color:var(--mu);font-size:12px;cursor:pointer;font-family:'Noto Sans TC',sans-serif;}
+.tp-btn.on{color:var(--ac);border-color:rgba(245,200,66,0.4);}
+.empty{text-align:center;padding:48px 20px;color:var(--mu);}
 
 /* SETTINGS */
-.sc{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:15px;margin-bottom:11px;}
-.st{font-size:13px;font-weight:700;margin-bottom:11px;}
-.sr{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px;}
+.sc{background:var(--sf);border:1px solid var(--bd);border-radius:11px;padding:14px;margin-bottom:11px;}
+.st{font-size:13px;font-weight:700;margin-bottom:10px;}
+.sr{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--bd);font-size:13px;}
 .sr:last-child{border-bottom:none;}
-.sk{color:var(--muted);}
+.sk{color:var(--mu);}
 .sv{font-family:'DM Mono',monospace;}
-
 @keyframes fadeUp{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
-::-webkit-scrollbar{width:3px;}
-::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
+::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:2px;}
 </style>
 </head>
 <body>
-
 <header class="hdr">
   <div class="logo">🪀</div>
   <div class="hdr-info">
     <div class="hdr-title">陀螺比賽行程表</div>
-    <div class="hdr-sub">台中・彰化 2026</div>
+    <div class="hdr-sub" id="hdrSub">台中・彰化 2026</div>
   </div>
-  <div class="search-wrap">
-    <span class="s-icon">🔍</span>
-    <input class="search-input" type="search" placeholder="搜尋…" id="searchInput" oninput="render()">
+  <div class="sw">
+    <span class="si">🔍</span>
+    <input class="sinput" type="search" placeholder="搜尋…" id="searchInput" oninput="render()">
   </div>
 </header>
 
-<!-- MODAL -->
-<div class="modal-bg" id="modalBg" onclick="closeModal(event)">
-  <div class="modal" id="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-date" id="modalDate"></div>
-    <div id="modalContent"></div>
+<div class="mbg" id="mbg" onclick="closeMod(event)">
+  <div class="modal">
+    <div class="mhandle"></div>
+    <div class="mdate" id="mdate"></div>
+    <div id="mcontent"></div>
   </div>
 </div>
 
 <div>
-  <!-- CALENDAR VIEW -->
+  <!-- 行事曆 -->
   <div class="view active" id="view-cal">
     <div class="cal-wrap">
-      <div class="cal-nav">
-        <button class="cal-nav-btn" onclick="prevMonth()">‹</button>
+      <div class="cal-top">
+        <button class="cal-nb" onclick="prevMo()">‹</button>
         <div class="cal-title" id="calTitle"></div>
-        <button class="cal-nav-btn" onclick="nextMonth()">›</button>
+        <button class="cal-nb" onclick="nextMo()">›</button>
       </div>
-      <div class="cal-grid-head">
+      <div class="cal-region-chips" id="calChips"></div>
+      <div class="cal-head">
         <div class="cal-dow">日</div><div class="cal-dow">一</div><div class="cal-dow">二</div>
         <div class="cal-dow">三</div><div class="cal-dow">四</div><div class="cal-dow">五</div><div class="cal-dow">六</div>
       </div>
@@ -181,17 +158,13 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-seri
     </div>
   </div>
 
-  <!-- LIST VIEW -->
+  <!-- 賽事列表 -->
   <div class="view" id="view-list">
     <div class="main">
       <div class="stats-row" id="statsRow"></div>
       <div class="fsec">
         <div class="flbl">地區</div>
-        <div class="chips">
-          <button class="chip active" data-region="all" onclick="setF('region','all')">全部</button>
-          <button class="chip" data-region="台中" onclick="setF('region','台中')">台中</button>
-          <button class="chip" data-region="彰化" onclick="setF('region','彰化')">彰化</button>
-        </div>
+        <div class="chips" id="regionChips"></div>
       </div>
       <div class="fsec">
         <div class="flbl">報名方式</div>
@@ -199,41 +172,40 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-seri
           <button class="chip active" data-reg="all" onclick="setF('reg','all')">全部</button>
           <button class="chip" data-reg="現場" onclick="setF('reg','現場')">現場</button>
           <button class="chip" data-reg="線上" onclick="setF('reg','線上')">線上</button>
+          <button class="chip" data-reg="線上+現場" onclick="setF('reg','線上+現場')">線上+現場</button>
           <button class="chip" data-reg="門市社群" onclick="setF('reg','門市社群')">門市社群</button>
           <button class="chip" data-reg="皆可" onclick="setF('reg','皆可')">皆可</button>
           <button class="chip" data-reg="電話" onclick="setF('reg','電話')">電話</button>
         </div>
       </div>
-      <div class="toggle-past-row">
-        <span style="font-size:12px;color:var(--muted)">已結束場次</span>
+      <div class="tp-row">
+        <span style="font-size:12px;color:var(--mu)">已結束場次</span>
         <button class="tp-btn" id="tpBtn" onclick="togglePast()">👁 顯示</button>
       </div>
       <div id="listContent"></div>
     </div>
   </div>
 
-  <!-- SETTINGS VIEW -->
+  <!-- 設定 -->
   <div class="view" id="view-set">
     <div class="main">
       <div class="sc">
         <div class="st">關於</div>
-        <div class="sr"><span class="sk">版本</span><span class="sv">1.1.0</span></div>
-        <div class="sr"><span class="sk">地區</span><span class="sv">台中・彰化</span></div>
-        <div class="sr"><span class="sk">賽季</span><span class="sv">2026 年 6 月</span></div>
+        <div class="sr"><span class="sk">版本</span><span class="sv">2.0.0</span></div>
+        <div class="sr"><span class="sk">賽季</span><span class="sv">2026年6月</span></div>
         <div class="sr"><span class="sk">場次總數</span><span class="sv" id="totalCount">-</span></div>
       </div>
       <div class="sc">
         <div class="st">安裝為 App</div>
-        <div style="font-size:13px;color:var(--muted);line-height:2;">
-          📱 <b style="color:var(--text)">iOS Safari：</b>點底部分享 → 加入主畫面<br>
-          🤖 <b style="color:var(--text)">Android Chrome：</b>右上角選單 → 新增到主畫面
+        <div style="font-size:13px;color:var(--mu);line-height:2;">
+          📱 <b style="color:var(--tx)">iOS Safari：</b>點底部分享 → 加入主畫面<br>
+          🤖 <b style="color:var(--tx)">Android Chrome：</b>右上角選單 → 新增到主畫面
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- BOTTOM NAV -->
 <nav class="bnav">
   <button class="nb active" id="nav-cal" onclick="switchView('cal')"><span class="ni">📅</span>行事曆</button>
   <button class="nb" id="nav-list" onclick="switchView('list')"><span class="ni">📋</span>賽事列表</button>
@@ -241,58 +213,84 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-seri
 </nav>
 
 <script>
-// ── 資料：只保留6月、只保留公開組 ──
+// ════════════════════════════════
+// 資料：只保留6月、公開組
+// region: 台中/彰化/南投/其他
+// ════════════════════════════════
 const ALL = [
-  {store:'RiRiCO',date:'2026/6/3',time:'19:30',cap:32,reg:'現場',addr:'台中市北屯區北屯路288號B1',region:'台中',phone:'0986-948-303'},
-  {store:'RiRiCO',date:'2026/6/10',time:'19:30',cap:32,reg:'現場',addr:'台中市北屯區北屯路288號B1',region:'台中',phone:'0986-948-303'},
-  {store:'RiRiCO',date:'2026/6/17',time:'19:30',cap:32,reg:'現場',addr:'台中市北屯區北屯路288號B1',region:'台中',phone:'0986-948-303'},
-  {store:'RiRiCO',date:'2026/6/24',time:'19:30',cap:32,reg:'現場',addr:'台中市北屯區北屯路288號B1',region:'台中',phone:'0986-948-303'},
-  {store:'玩具e哥台中文心',date:'2026/6/20',time:'15:30',cap:24,reg:'現場',addr:'台中市北屯區文心路四段225號',region:'台中',phone:'(04)3707-6188'},
-  {store:'鼎美玩具 金典綠園道',date:'2026/6/6',time:'13:00',cap:16,reg:'現場',addr:'台中市西區健行路1049號6樓',region:'台中',phone:'(04)3707-3966'},
-  {store:'SN玩具行',date:'2026/6/6',time:'13:00',cap:16,reg:'門市社群',addr:'台中市北屯區東山路一段147之3號',region:'台中',phone:'0988-451545'},
-  {store:'SN玩具行',date:'2026/6/27',time:'13:00',cap:16,reg:'門市社群',addr:'台中市北屯區東山路一段147之3號',region:'台中',phone:'0988-451545'},
-  {store:'星玩具',date:'2026/6/6',time:'11:00',cap:16,reg:'線上',addr:'台中市太平區旱溪東路一段590號',region:'台中',phone:'04-23954590'},
-  {store:'星玩具',date:'2026/6/20',time:'11:00',cap:16,reg:'線上',addr:'台中市太平區旱溪東路一段590號',region:'台中',phone:'04-23954591'},
-  {store:'獵模士',date:'2026/6/7',time:'14:00',cap:32,reg:'皆可',addr:'台中市西屯區西安街191號',region:'台中',phone:'0989-454422'},
-  {store:'獵模士',date:'2026/6/21',time:'14:00',cap:32,reg:'皆可',addr:'台中市西屯區西安街191號',region:'台中',phone:'0989-454422'},
-  {store:'唐采-潭子店',date:'2026/6/6',time:'14:00',cap:16,reg:'線上',addr:'台中市潭子區中山路三段17號',region:'台中',phone:'0979-360209'},
-  {store:'唐采-河北店',date:'2026/6/13',time:'14:00',cap:16,reg:'線上',addr:'台中市北屯區河北路二段71號',region:'台中',phone:'0901-360209'},
-  {store:'唐采-樂成店',date:'2026/6/20',time:'14:00',cap:16,reg:'線上',addr:'台中市東區育英路90號',region:'台中',phone:'0979-598871'},
-  {store:'森森文具玩具',date:'2026/6/7',time:'15:00',cap:32,reg:'線上',addr:'台中市后里區成功路356號',region:'台中',phone:'(04)2558-9226'},
-  {store:'森森文具玩具',date:'2026/6/14',time:'15:00',cap:32,reg:'線上',addr:'台中市后里區成功路356號',region:'台中',phone:'(04)2558-9226'},
-  {store:'大利市員林',date:'2026/6/20',time:'14:00',cap:32,reg:'現場',addr:'彰化縣員林市溝皂東街32號',region:'彰化',phone:'04-8343399'},
-  {store:'遛小孩',date:'2026/6/7',time:'15:00',cap:32,reg:'皆可',addr:'彰化縣彰化市茄苳路一段303巷106-1號',region:'彰化',phone:'04-7280556'},
-  {store:'遛小孩',date:'2026/6/21',time:'15:00',cap:32,reg:'皆可',addr:'彰化縣彰化市茄苳路一段303巷106-1號',region:'彰化',phone:'04-7280556'},
+  // ── 台中地區 ──
+  {store:'RiRiCO',         date:'2026/6/3',  time:'19:30',cap:32, reg:'現場',    addr:'台中市北屯區北屯路288號B1',          region:'台中',phone:'0986-948-303'},
+  {store:'RiRiCO',         date:'2026/6/10', time:'19:30',cap:32, reg:'現場',    addr:'台中市北屯區北屯路288號B1',          region:'台中',phone:'0986-948-303'},
+  {store:'RiRiCO',         date:'2026/6/17', time:'19:30',cap:32, reg:'現場',    addr:'台中市北屯區北屯路288號B1',          region:'台中',phone:'0986-948-303'},
+  {store:'RiRiCO',         date:'2026/6/24', time:'19:30',cap:32, reg:'現場',    addr:'台中市北屯區北屯路288號B1',          region:'台中',phone:'0986-948-303'},
+  {store:'玩具e哥台中文心', date:'2026/6/20', time:'15:30',cap:24, reg:'現場',    addr:'台中市北屯區文心路四段225號',         region:'台中',phone:'(04)3707-6188'},
+  {store:'鼎美玩具 金典綠園道',date:'2026/6/6',time:'13:00',cap:16,reg:'現場',   addr:'台中市西區健行路1049號6樓',           region:'台中',phone:'(04)3707-3966'},
+  {store:'SN玩具行',        date:'2026/6/6',  time:'13:00',cap:16, reg:'門市社群',addr:'台中市北屯區東山路一段147之3號',      region:'台中',phone:'0988-451545'},
+  {store:'SN玩具行',        date:'2026/6/27', time:'13:00',cap:16, reg:'門市社群',addr:'台中市北屯區東山路一段147之3號',      region:'台中',phone:'0988-451545'},
+  {store:'星玩具',          date:'2026/6/6',  time:'11:00',cap:16, reg:'線上',    addr:'台中市太平區旱溪東路一段590號',       region:'台中',phone:'04-23954590'},
+  {store:'星玩具',          date:'2026/6/20', time:'11:00',cap:16, reg:'線上',    addr:'台中市太平區旱溪東路一段590號',       region:'台中',phone:'04-23954591'},
+  {store:'獵模士',          date:'2026/6/7',  time:'14:00',cap:32, reg:'皆可',    addr:'台中市西屯區西安街191號',             region:'台中',phone:'0989-454422'},
+  {store:'獵模士',          date:'2026/6/21', time:'14:00',cap:32, reg:'皆可',    addr:'台中市西屯區西安街191號',             region:'台中',phone:'0989-454422'},
+  {store:'唐采-潭子店',     date:'2026/6/6',  time:'14:00',cap:16, reg:'線上',    addr:'台中市潭子區中山路三段17號',          region:'台中',phone:'0979-360209'},
+  {store:'唐采-河北店',     date:'2026/6/13', time:'14:00',cap:16, reg:'線上',    addr:'台中市北屯區河北路二段71號',          region:'台中',phone:'0901-360209'},
+  {store:'唐采-樂成店',     date:'2026/6/20', time:'14:00',cap:16, reg:'線上',    addr:'台中市東區育英路90號',                region:'台中',phone:'0979-598871'},
+  {store:'森森文具玩具',    date:'2026/6/7',  time:'15:00',cap:32, reg:'線上',    addr:'台中市后里區成功路356號',             region:'台中',phone:'(04)2558-9226'},
+  {store:'森森文具玩具',    date:'2026/6/14', time:'15:00',cap:32, reg:'線上',    addr:'台中市后里區成功路356號',             region:'台中',phone:'(04)2558-9226'},
+  {store:'北區城堡',        date:'2026/6/14', time:'18:00',cap:16, reg:'線上+現場',addr:'台中市北區三民路三段356號',          region:'台中',phone:'0907-207995'},
+  {store:'北區城堡',        date:'2026/6/21', time:'18:00',cap:16, reg:'線上+現場',addr:'台中市北區三民路三段356號',          region:'台中',phone:'0907-207995'},
+  {store:'北區城堡',        date:'2026/6/28', time:'18:00',cap:16, reg:'線上+現場',addr:'台中市北區三民路三段356號',          region:'台中',phone:'0907-207995'},
+  {store:'南區愛買',        date:'2026/6/6',  time:'17:00',cap:16, reg:'線上+現場',addr:'台中市南區復興路一段359號2F',        region:'台中',phone:'0918-025691'},
+  {store:'南區愛買',        date:'2026/6/20', time:'17:00',cap:16, reg:'線上+現場',addr:'台中市南區復興路一段359號2F',        region:'台中',phone:'0918-025691'},
+  {store:'豐原',            date:'2026/6/5',  time:'19:00',cap:16, reg:'線上+現場',addr:'台中市豐原區豐陽路92號',             region:'台中',phone:'04-25131373'},
+  {store:'豐原',            date:'2026/6/26', time:'19:00',cap:16, reg:'線上+現場',addr:'台中市豐原區豐陽路92號',             region:'台中',phone:'04-25131373'},
+  {store:'后里',            date:'2026/6/6',  time:'19:00',cap:16, reg:'線上+現場',addr:'台中市后里區成功路373號',             region:'台中',phone:'0912-841008'},
+  {store:'后里',            date:'2026/6/27', time:'19:00',cap:16, reg:'線上+現場',addr:'台中市后里區成功路373號',             region:'台中',phone:'0912-841008'},
+  // ── 彰化地區 ──
+  {store:'大利市員林',      date:'2026/6/20', time:'14:00',cap:32, reg:'現場',    addr:'彰化縣員林市溝皂東街32號',            region:'彰化',phone:'04-8343399'},
+  {store:'遛小孩',          date:'2026/6/7',  time:'15:00',cap:32, reg:'皆可',    addr:'彰化縣彰化市茄苳路一段303巷106-1號',  region:'彰化',phone:'04-7280556'},
+  {store:'遛小孩',          date:'2026/6/21', time:'15:00',cap:32, reg:'皆可',    addr:'彰化縣彰化市茄苳路一段303巷106-1號',  region:'彰化',phone:'04-7280556'},
+  {store:'員林',            date:'2026/6/3',  time:'18:30',cap:16, reg:'線上+現場',addr:'彰化縣員林市至善街30號',             region:'彰化',phone:'04-8363602'},
+  {store:'員林',            date:'2026/6/10', time:'18:30',cap:16, reg:'線上+現場',addr:'彰化縣員林市至善街30號',             region:'彰化',phone:'04-8363602'},
+  {store:'來玩聚彰化家樂福',date:'2026/6/28', time:'15:00',cap:16, reg:'門市社群',addr:'彰化市金馬路2段321號2樓',             region:'彰化',phone:'04-7357475'},
+  // ── 南投地區（文件中無，預留） ──
 ];
 
+// 日期排序用整數
+function d2i(s){const[y,m,d]=s.split('/').map(Number);return y*10000+m*100+d;}
+function isPast(e){const n=new Date();const t=n.getFullYear()*10000+(n.getMonth()+1)*100+n.getDate();return d2i(e.date)<t;}
+function parseDate(s){const[y,m,d]=s.split('/').map(Number);return new Date(y,m-1,d);}
+
+const REGIONS = ['台中','彰化'];
+const REGION_COLORS = {台中:'tc',彰化:'ch'};
 const WD=['日','一','二','三','四','五','六'];
-let F={region:'all',reg:'all'};
+
+let F={region:'台中',reg:'all'};
+let calRegion='台中';
+let calYear=2026, calMonth=5;
 let hidePast=false;
-let calYear=2026, calMonth=5; // 0-indexed month = June
 
-function parseDate(dateStr){
-  const [y,m,d]=dateStr.split('/').map(Number);
-  return new Date(y, m-1, d);
-}
-
-function dateToInt(dateStr){
-  // 2026/6/7 → 20260607，純數字比較不受 timezone 影響
-  const [y,m,d]=dateStr.split('/').map(Number);
-  return y*10000 + m*100 + d;
-}
-
-function isPast(e){
-  const n=new Date();
-  const todayInt=n.getFullYear()*10000+(n.getMonth()+1)*100+n.getDate();
-  return dateToInt(e.date) < todayInt;
+// ── 初始化地區chips ──
+function initChips(){
+  // 列表地區
+  document.getElementById('regionChips').innerHTML=
+    `<button class="chip active" data-region="all" onclick="setF('region','all')">全部</button>`+
+    REGIONS.map(r=>`<button class="chip" data-region="${r}" onclick="setF('region','${r}')">${r}</button>`).join('');
+  // 行事曆地區
+  document.getElementById('calChips').innerHTML=
+    REGIONS.map(r=>`<button class="cal-chip${calRegion===r?' active':''}" onclick="setCalRegion('${r}')">${r}</button>`).join('');
 }
 
 function setF(k,v){
   F[k]=v;
-  document.querySelectorAll(`[data-${k}]`).forEach(b=>b.classList.toggle('active',b.dataset[k]===v));
+  if(k==='region') document.querySelectorAll('[data-region]').forEach(b=>b.classList.toggle('active',b.dataset.region===v));
+  if(k==='reg') document.querySelectorAll('[data-reg]').forEach(b=>b.classList.toggle('active',b.dataset.reg===v));
   render();
 }
-
+function setCalRegion(r){
+  calRegion=r;
+  document.querySelectorAll('.cal-chip').forEach(b=>b.classList.toggle('active',b.textContent===r));
+  renderCal();
+}
 function togglePast(){
   hidePast=!hidePast;
   const btn=document.getElementById('tpBtn');
@@ -300,7 +298,6 @@ function togglePast(){
   btn.classList.toggle('on',hidePast);
   render();
 }
-
 function switchView(v){
   document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));
   document.querySelectorAll('.nb').forEach(el=>el.classList.remove('active'));
@@ -310,57 +307,54 @@ function switchView(v){
   if(v==='list') render();
 }
 
-// ── CARD HTML ──
+// ── 卡片 ──
 function cardHTML(e,i){
   const d=parseDate(e.date);
   const wd=WD[d.getDay()];
   const md=e.date.replace('2026/','');
-  const rc=e.region==='彰化'?'badge-ch':'badge-tc';
+  const rc='bdg-'+(REGION_COLORS[e.region]||'ot');
   const past=isPast(e);
-  const regC={現場:'#e8834a',線上:'#5b9cf6',門市社群:'#c77dff',皆可:'#52c87a',電話:'#f5c842'};
-  const rc2=regC[e.reg]||'var(--muted)';
-  return `<div class="card${past?' past':''}" style="animation:fadeUp 0.2s ${i*0.03}s ease both;">
-    <div class="c-head">
-      <div class="store-name">${e.store}</div>
-      <div class="badges">
-        <span class="badge ${rc}">${e.region}</span>
-        <span class="badge badge-open">公開 6歲↑</span>
-        ${past?'<span class="badge badge-past">已結束</span>':''}
+  const regC={現場:'#e8834a',線上:'#5b9cf6','線上+現場':'#a8c4f8',門市社群:'#c77dff',皆可:'#52c87a',電話:'#f5c842'};
+  const rc2=regC[e.reg]||'var(--mu)';
+  return `<div class="card${past?' past':''}" style="animation:fadeUp 0.2s ${i*0.025}s ease both;">
+    <div class="chead">
+      <div class="sname">${e.store}</div>
+      <div class="bdgs">
+        <span class="bdg ${rc}">${e.region}</span>
+        <span class="bdg bdg-open">公開 6歲↑</span>
+        ${past?'<span class="bdg bdg-past">已結束</span>':''}
       </div>
     </div>
-    <div class="c-info">
-      <span class="c-item">📅 ${md}（${wd}）</span>
-      <span class="c-item">🕐 ${e.time}</span>
-      <span class="c-item">👥 上限 ${e.cap} 人</span>
+    <div class="cinfo">
+      <span class="ci">📅 ${md}（${wd}）</span>
+      <span class="ci">🕐 ${e.time}</span>
+      <span class="ci">👥 ${e.cap}人</span>
     </div>
-    <div class="c-addr">📍 ${e.addr}</div>
-    <div class="c-foot">
-      <span class="reg-tag" style="color:${rc2}">● ${e.reg}</span>
-      ${past?'<span class="past-dash">已結束</span>':`<a class="phone-link" href="tel:${e.phone.replace(/[^\d]/g,'')}">${e.phone}</a>`}
+    <div class="caddr">📍 ${e.addr}</div>
+    <div class="cfoot">
+      <span class="rtag" style="color:${rc2}">● ${e.reg}</span>
+      ${past?'<span style="font-size:11px;color:var(--mu)">已結束</span>':`<a class="plink" href="tel:${e.phone.replace(/[^\d]/g,'')}">${e.phone}</a>`}
     </div>
   </div>`;
 }
 
-// ── LIST RENDER ──
+// ── 列表 ──
 function render(){
   const q=document.getElementById('searchInput').value.toLowerCase();
   const data=ALL.filter(e=>{
     if(F.region!=='all'&&e.region!==F.region)return false;
     if(F.reg!=='all'&&e.reg!==F.reg)return false;
     if(hidePast&&isPast(e))return false;
-    if(q&&!e.store.includes(q)&&!e.addr.includes(q))return false;
+    if(q&&!e.store.includes(q)&&!e.addr.includes(q)&&!e.region.includes(q))return false;
     return true;
-  }).sort((a,b)=>{
-    const pa=isPast(a)?1:0, pb=isPast(b)?1:0;
-    if(pa!==pb) return pa-pb; // 未結束在前
+  });
 
-    // 把 2026/6/7 → 20260607 做數字比較，完全不依賴 Date 物件
-    function toInt(e){
-      const [y,m,d]=e.date.split('/').map(Number);
-      return y*10000 + m*100 + d; // 20260607
-    }
-    const da=toInt(a), db=toInt(b);
-    if(da!==db) return da-db; // 日期小的在前（6/6 < 6/7 < 6/13）
+  // 強制排序：先用d2i數字排，已結束沉底
+  data.sort((a,b)=>{
+    const pa=isPast(a)?1:0, pb=isPast(b)?1:0;
+    if(pa!==pb) return pa-pb;
+    const da=d2i(a.date), db=d2i(b.date);
+    if(da!==db) return da-db;
     return a.time.localeCompare(b.time);
   });
 
@@ -368,60 +362,39 @@ function render(){
   const ch=data.filter(e=>e.region==='彰化').length;
   document.getElementById('statsRow').innerHTML=`
     <div class="stat"><div class="stat-num">${data.length}</div><div class="stat-lbl">場次</div></div>
-    <div class="stat"><div class="stat-num" style="color:var(--tc)">${tc}</div><div class="stat-lbl">台中</div></div>
-    <div class="stat"><div class="stat-num" style="color:var(--ch)">${ch}</div><div class="stat-lbl">彰化</div></div>
+    <div class="stat"><div class="stat-num" style="color:#5b9cf6">${tc}</div><div class="stat-lbl">台中</div></div>
+    <div class="stat"><div class="stat-num" style="color:#52c87a">${ch}</div><div class="stat-lbl">彰化</div></div>
   `;
   document.getElementById('totalCount').textContent=ALL.length+' 場';
 
-  if(!data.length){
-    document.getElementById('listContent').innerHTML='<div class="empty">🔍<br>找不到賽事</div>';
-    return;
-  }
-  // 強制指定日期順序，完全不靠演算法
-  const DATE_ORDER = [
-    '2026/6/6','2026/6/7','2026/6/10','2026/6/13','2026/6/14',
-    '2026/6/17','2026/6/20','2026/6/21','2026/6/24','2026/6/27','2026/6/28',
-    '2026/6/3' // 已結束放最後
-  ];
+  if(!data.length){document.getElementById('listContent').innerHTML='<div class="empty">🔍<br>找不到賽事</div>';return;}
 
-  const dateOrder=[];
-  const byDate={};
-  data.forEach(e=>{
-    if(!byDate[e.date]){byDate[e.date]=[];} 
-    byDate[e.date].push(e);
-  });
+  // 依日期分組，順序跟data一樣
+  const dateOrder=[], byDate={};
+  data.forEach(e=>{if(!byDate[e.date]){byDate[e.date]=[];dateOrder.push(e.date);}byDate[e.date].push(e);});
 
-  // 依照強制順序排列，有資料的才顯示
-  DATE_ORDER.forEach(dk=>{
-    if(byDate[dk]) dateOrder.push(dk);
-  });
-  // 萬一有不在清單的日期，補到最後
-  Object.keys(byDate).forEach(dk=>{
-    if(!DATE_ORDER.includes(dk)) dateOrder.push(dk);
-  });
   let i=0;
-  document.getElementById('listContent').innerHTML=dateOrder.map(dateKey=>{
-    const d=parseDate(dateKey);
+  document.getElementById('listContent').innerHTML=dateOrder.map(dk=>{
+    const d=parseDate(dk);
     const wd=WD[d.getDay()];
-    const md=dateKey.replace('2026/','');
-    const past=byDate[dateKey].every(e=>isPast(e));
-    return `<div class="week-group">
-      <div class="wk-hdr"><div class="wk-line"></div><div class="wk-tag${past?' past-tag':''}">${md}（${wd}） · ${byDate[dateKey].length}場</div><div class="wk-line"></div></div>
-      ${byDate[dateKey].map(e=>cardHTML(e,i++)).join('')}
+    const md=dk.replace('2026/','');
+    const pt=byDate[dk].every(e=>isPast(e));
+    return `<div class="dgrp">
+      <div class="dhdr"><div class="dline"></div><div class="dtag${pt?' pt':''}">${md}（${wd}）・${byDate[dk].length}場</div><div class="dline"></div></div>
+      ${byDate[dk].map(e=>cardHTML(e,i++)).join('')}
     </div>`;
   }).join('');
 }
 
-// ── CALENDAR RENDER ──
+// ── 行事曆 ──
 function renderCal(){
   const today=new Date();
   const y=calYear, m=calMonth;
-  const monthNames=['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
-  document.getElementById('calTitle').textContent=`${y} 年 ${monthNames[m]}`;
+  const MN=['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+  document.getElementById('calTitle').textContent=`${y}年 ${MN[m]}`;
 
-  // build map: date string -> events
   const evMap={};
-  ALL.forEach(e=>{
+  ALL.filter(e=>calRegion==='all'||e.region===calRegion).forEach(e=>{
     if(!evMap[e.date])evMap[e.date]=[];
     evMap[e.date].push(e);
   });
@@ -429,84 +402,54 @@ function renderCal(){
   const firstDay=new Date(y,m,1).getDay();
   const daysInMonth=new Date(y,m+1,0).getDate();
   const daysInPrev=new Date(y,m,0).getDate();
-
+  const totalCells=Math.ceil((firstDay+daysInMonth)/7)*7;
   let cells='';
-  let totalCells=Math.ceil((firstDay+daysInMonth)/7)*7;
 
   for(let i=0;i<totalCells;i++){
-    let day, dateObj, isCurrentMonth=true;
-    if(i<firstDay){
-      day=daysInPrev-firstDay+i+1;
-      dateObj=new Date(y,m-1,day);
-      isCurrentMonth=false;
-    } else if(i>=firstDay+daysInMonth){
-      day=i-firstDay-daysInMonth+1;
-      dateObj=new Date(y,m+1,day);
-      isCurrentMonth=false;
-    } else {
-      day=i-firstDay+1;
-      dateObj=new Date(y,m,day);
-    }
+    let day, dateObj, cur=true;
+    if(i<firstDay){day=daysInPrev-firstDay+i+1;dateObj=new Date(y,m-1,day);cur=false;}
+    else if(i>=firstDay+daysInMonth){day=i-firstDay-daysInMonth+1;dateObj=new Date(y,m+1,day);cur=false;}
+    else{day=i-firstDay+1;dateObj=new Date(y,m,day);}
 
     const isToday=dateObj.toDateString()===today.toDateString();
-    // 用不補零格式，與資料一致：2026/6/3
     const dateStr=`${dateObj.getFullYear()}/${dateObj.getMonth()+1}/${dateObj.getDate()}`;
     const evs=evMap[dateStr]||[];
     const hasEv=evs.length>0;
-    const allPast=hasEv&&evs.every(e=>isPast(e));
 
     let pills='';
-    const show=evs.slice(0,2);
-    show.forEach(e=>{
-      const pc=isPast(e)?'past':(e.region==='彰化'?'ch':'tc');
-      pills+=`<div class="cal-pill ${pc}" onclick="openModal('${dateStr}');event.stopPropagation();">${e.store}</div>`;
+    evs.slice(0,3).forEach(e=>{
+      const pc=isPast(e)?'past':(REGION_COLORS[e.region]||'other-r');
+      pills+=`<div class="cpill ${pc}" onclick="openMod('${dateStr}');event.stopPropagation();">${e.store}</div>`;
     });
-    if(evs.length>2) pills+=`<div class="cal-more">+${evs.length-2}</div>`;
+    if(evs.length>3) pills+=`<div class="cmore">+${evs.length-3}</div>`;
 
-    cells+=`<div class="cal-cell${hasEv?' has-event':''}${isToday?' today':''}${!isCurrentMonth?' other-month':''}"
-      ${hasEv?`onclick="openModal('${dateStr}')"`:''}>
-      <div class="cal-date">${day}</div>
-      ${pills}
-    </div>`;
+    cells+=`<div class="cal-cell${hasEv?' has-ev':''}${isToday?' today':''}${!cur?' other':''}"${hasEv?` onclick="openMod('${dateStr}')"`:''}><div class="cdate">${day}</div>${pills}</div>`;
   }
   document.getElementById('calGrid').innerHTML=cells;
 }
 
-function prevMonth(){
-  calMonth--;
-  if(calMonth<0){calMonth=11;calYear--;}
-  renderCal();
-}
-function nextMonth(){
-  calMonth++;
-  if(calMonth>11){calMonth=0;calYear++;}
-  renderCal();
-}
-
-// ── MODAL ──
-function openModal(dateStr){
-  const evs=ALL.filter(e=>e.date===dateStr).sort((a,b)=>a.time.localeCompare(b.time));
+// ── Modal ──
+function openMod(dateStr){
+  const evs=ALL.filter(e=>e.date===dateStr&&(calRegion==='all'||e.region===calRegion)).sort((a,b)=>a.time.localeCompare(b.time));
   if(!evs.length)return;
   const d=parseDate(dateStr);
-  const wd=WD[d.getDay()];
-  document.getElementById('modalDate').textContent=`${dateStr.replace('2026/','')} （${wd}） · ${evs.length} 場`;
-  document.getElementById('modalContent').innerHTML=evs.map((e,i)=>cardHTML(e,i)).join('');
-  document.getElementById('modalBg').classList.add('open');
+  document.getElementById('mdate').textContent=`${dateStr.replace('2026/','')}（${WD[d.getDay()]}）· ${evs.length}場`;
+  document.getElementById('mcontent').innerHTML=evs.map((e,i)=>cardHTML(e,i)).join('');
+  document.getElementById('mbg').classList.add('open');
   document.body.style.overflow='hidden';
 }
-function closeModal(e){
-  if(e.target===document.getElementById('modalBg')){
-    document.getElementById('modalBg').classList.remove('open');
+function closeMod(e){
+  if(e.target===document.getElementById('mbg')){
+    document.getElementById('mbg').classList.remove('open');
     document.body.style.overflow='';
   }
 }
+function prevMo(){calMonth--;if(calMonth<0){calMonth=11;calYear--;}renderCal();}
+function nextMo(){calMonth++;if(calMonth>11){calMonth=0;calYear++;}renderCal();}
 
-// Register SW
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('sw.js').catch(()=>{});
-}
+if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
 
-// init
+initChips();
 renderCal();
 render();
 </script>
