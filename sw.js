@@ -1,4 +1,4 @@
-const CACHE = 'beyblade-v1';
+const CACHE = 'beyblade-v3';
 const ASSETS = [
   '/index.html',
   '/manifest.json'
