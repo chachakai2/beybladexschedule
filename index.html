@@ -377,13 +377,27 @@ function render(){
     document.getElementById('listContent').innerHTML='<div class="empty">🔍<br>找不到賽事</div>';
     return;
   }
-  // 直接用日期分組，排序已經正確，插入順序就是顯示順序
+  // 強制指定日期順序，完全不靠演算法
+  const DATE_ORDER = [
+    '2026/6/6','2026/6/7','2026/6/10','2026/6/13','2026/6/14',
+    '2026/6/17','2026/6/20','2026/6/21','2026/6/24','2026/6/27','2026/6/28',
+    '2026/6/3' // 已結束放最後
+  ];
+
   const dateOrder=[];
   const byDate={};
   data.forEach(e=>{
-    const k=e.date;
-    if(!byDate[k]){byDate[k]=[];dateOrder.push(k);}
-    byDate[k].push(e);
+    if(!byDate[e.date]){byDate[e.date]=[];} 
+    byDate[e.date].push(e);
+  });
+
+  // 依照強制順序排列，有資料的才顯示
+  DATE_ORDER.forEach(dk=>{
+    if(byDate[dk]) dateOrder.push(dk);
+  });
+  // 萬一有不在清單的日期，補到最後
+  Object.keys(byDate).forEach(dk=>{
+    if(!DATE_ORDER.includes(dk)) dateOrder.push(dk);
   });
   let i=0;
   document.getElementById('listContent').innerHTML=dateOrder.map(dateKey=>{
