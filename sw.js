@@ -1,7 +1,7 @@
-const CACHE = 'beyblade-v3';
+const CACHE = 'beyblade-v4';
 const ASSETS = [
-  '/index.html',
-  '/manifest.json'
+  '/beybladexschedule/index.html',
+  '/beybladexschedule/manifest.json'
 ];
 
 self.addEventListener('install', e => {
