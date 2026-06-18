@@ -2,7 +2,7 @@
   "name": "陀螺比賽行程表",
   "short_name": "陀螺賽事",
   "description": "台中・彰化 陀螺比賽行程查詢",
-  "start_url": "/beybladexschedule/index.html",
+  "start_url": "/beybladexschedule/",
   "scope": "/beybladexschedule/",
   "display": "standalone",
   "background_color": "#0e0f14",

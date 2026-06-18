@@ -16,85 +16,68 @@
 :root{--bg:#0e0f14;--sf:#16181f;--sf2:#1e2028;--bd:rgba(255,255,255,0.07);--bd2:rgba(255,255,255,0.13);--tx:#e8eaf0;--mu:#7a7f94;--ac:#f5c842;}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 body{background:var(--bg);color:var(--tx);font-family:'Noto Sans TC',sans-serif;font-size:14px;line-height:1.6;padding-bottom:calc(64px + env(safe-area-inset-bottom));}
-
 .hdr{position:sticky;top:0;z-index:100;background:rgba(14,15,20,0.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--bd);padding:env(safe-area-inset-top) 14px 10px;display:flex;align-items:center;gap:10px;}
 .logo{width:28px;height:28px;border-radius:7px;background:var(--ac);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
-.hdr-info{flex:1;}
-.hdr-title{font-size:15px;font-weight:700;}
-.hdr-sub{font-size:10px;color:var(--mu);font-family:'DM Mono',monospace;}
-.sw{position:relative;}
-.si{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--mu);font-size:12px;pointer-events:none;}
+.hdr-info{flex:1;}.hdr-title{font-size:15px;font-weight:700;}.hdr-sub{font-size:10px;color:var(--mu);font-family:'DM Mono',monospace;}
+.sw{position:relative;}.si{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--mu);font-size:12px;pointer-events:none;}
 .sinput{background:var(--sf2);border:1px solid var(--bd);border-radius:18px;padding:6px 10px 6px 28px;color:var(--tx);font-size:12px;width:120px;outline:none;font-family:'Noto Sans TC',sans-serif;}
 .sinput::placeholder{color:var(--mu);}
-
 .bnav{position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(14,15,20,0.97);backdrop-filter:blur(20px);border-top:1px solid var(--bd);display:flex;padding-bottom:env(safe-area-inset-bottom);}
 .nb{flex:1;display:flex;flex-direction:column;align-items:center;padding:9px 4px;border:none;background:transparent;color:var(--mu);font-size:10px;cursor:pointer;gap:2px;transition:color 0.15s;font-family:'Noto Sans TC',sans-serif;}
-.nb.active{color:var(--ac);}
-.ni{font-size:20px;line-height:1;}
-
+.nb.active{color:var(--ac);}.ni{font-size:20px;line-height:1;}
 .view{display:none;}.view.active{display:block;}
 .main{padding:12px;}
-
-/* CALENDAR */
+.lock{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:32px;}
+.lock-logo{width:64px;height:64px;border-radius:16px;background:var(--ac);display:flex;align-items:center;justify-content:center;font-size:36px;}
+.lock-title{font-size:18px;font-weight:700;}.lock-sub{font-size:13px;color:var(--mu);}
+.lock-dots{display:flex;gap:14px;margin:8px 0;}
+.lock-dot{width:14px;height:14px;border-radius:50%;border:2px solid var(--bd2);transition:all 0.15s;}
+.lock-dot.filled{background:var(--ac);border-color:var(--ac);}.lock-dot.error{background:#e55;border-color:#e55;}
+.lock-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:240px;}
+.lock-btn{height:62px;border-radius:14px;border:1px solid var(--bd);background:var(--sf);color:var(--tx);font-size:22px;font-weight:500;cursor:pointer;font-family:'Noto Sans TC',sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;}
+.lock-btn:active{background:var(--sf2);transform:scale(0.95);}.lock-btn .sub{font-size:8px;color:var(--mu);letter-spacing:0.1em;}.lock-btn.del{font-size:18px;color:var(--mu);}
+.lock-err{font-size:13px;color:#e77;height:18px;text-align:center;}
 .cal-wrap{padding:10px;}
 .cal-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
 .cal-title{font-size:16px;font-weight:700;font-family:'DM Mono',monospace;}
 .cal-nb{background:var(--sf);border:1px solid var(--bd);border-radius:8px;width:32px;height:32px;color:var(--tx);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
-.cal-region-chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;}
+.cal-chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;}
 .cal-chip{padding:4px 10px;border-radius:16px;border:1px solid var(--bd);background:var(--sf);color:var(--mu);font-size:11px;cursor:pointer;font-family:'Noto Sans TC',sans-serif;transition:all 0.15s;white-space:nowrap;}
 .cal-chip.active{background:var(--ac);color:#1a1400;border-color:var(--ac);font-weight:700;}
 .cal-head{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:3px;}
 .cal-dow{text-align:center;font-size:11px;color:var(--mu);padding:3px 0;font-weight:500;}
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}
-.cal-cell{aspect-ratio:1/1.1;border-radius:6px;padding:3px;background:var(--sf);border:1px solid var(--bd);cursor:default;overflow:hidden;position:relative;}
+.cal-cell{aspect-ratio:1/1.1;border-radius:6px;padding:3px;background:var(--sf);border:1px solid var(--bd);cursor:default;overflow:hidden;}
 .cal-cell.has-ev{cursor:pointer;border-color:rgba(255,255,255,0.14);background:var(--sf2);}
 .cal-cell.today{border-color:var(--ac)!important;border-width:1.5px;}
 .cal-cell.other{opacity:0.22;}
 .cdate{font-size:10px;font-weight:700;color:var(--mu);margin-bottom:2px;font-family:'DM Mono',monospace;line-height:1;}
 .cal-cell.today .cdate{color:var(--ac);}
 .cpill{font-size:8px;line-height:1.3;padding:1px 3px;border-radius:2px;margin-bottom:1px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;display:block;width:100%;}
-.cpill.tc{background:rgba(91,156,246,0.3);color:#a8ccfc;}
-.cpill.ch{background:rgba(82,200,122,0.3);color:#90e4b0;}
-.cpill.nt{background:rgba(199,125,255,0.28);color:#d9a8ff;}
-.cpill.other-r{background:rgba(232,131,74,0.28);color:#f0b08a;}
-.cpill.past{background:rgba(255,255,255,0.07);color:var(--mu);}
+.cpill.tc{background:rgba(91,156,246,0.3);color:#a8ccfc;}.cpill.ch{background:rgba(82,200,122,0.3);color:#90e4b0;}.cpill.past{background:rgba(255,255,255,0.07);color:var(--mu);}
 .cmore{font-size:8px;color:var(--mu);}
-
-/* MODAL */
 .mbg{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.72);backdrop-filter:blur(4px);align-items:flex-end;justify-content:center;}
 .mbg.open{display:flex;}
 .modal{background:var(--sf);border-radius:20px 20px 0 0;width:100%;max-height:85vh;overflow-y:auto;padding:16px 16px calc(16px + env(safe-area-inset-bottom));}
 .mhandle{width:36px;height:4px;background:var(--bd2);border-radius:2px;margin:0 auto 14px;}
 .mdate{font-size:13px;color:var(--mu);margin-bottom:12px;font-family:'DM Mono',monospace;}
-
-/* CARDS */
 .card{background:var(--sf2);border:1px solid var(--bd);border-radius:11px;padding:13px;margin-bottom:9px;}
-.card.past{opacity:0.33;filter:grayscale(0.6);}
-.card.past .sname{color:var(--mu);}
+.card.past{opacity:0.33;filter:grayscale(0.6);}.card.past .sname{color:var(--mu);}
 .chead{display:flex;align-items:flex-start;justify-content:space-between;gap:6px;margin-bottom:7px;}
 .sname{font-size:14px;font-weight:700;}
 .bdgs{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;}
 .bdg{font-size:10px;padding:2px 7px;border-radius:20px;font-weight:500;white-space:nowrap;}
-.bdg-tc{background:rgba(91,156,246,0.15);color:#5b9cf6;}
-.bdg-ch{background:rgba(82,200,122,0.15);color:#52c87a;}
-.bdg-nt{background:rgba(199,125,255,0.15);color:#c77dff;}
-.bdg-ot{background:rgba(232,131,74,0.15);color:#e8834a;}
-.bdg-open{background:rgba(245,200,66,0.12);color:var(--ac);}
-.bdg-past{background:rgba(255,255,255,0.06);color:var(--mu);}
-.cinfo{display:flex;flex-wrap:wrap;gap:5px 12px;margin-bottom:7px;}
-.ci{font-size:12px;color:var(--mu);}
+.bdg-tc{background:rgba(91,156,246,0.15);color:#5b9cf6;}.bdg-ch{background:rgba(82,200,122,0.15);color:#52c87a;}
+.bdg-open{background:rgba(245,200,66,0.12);color:var(--ac);}.bdg-past{background:rgba(255,255,255,0.06);color:var(--mu);}
+.cinfo{display:flex;flex-wrap:wrap;gap:5px 12px;margin-bottom:7px;}.ci{font-size:12px;color:var(--mu);}
 .caddr{font-size:11px;color:var(--mu);padding:5px 7px;background:var(--bg);border-radius:5px;margin-bottom:7px;}
 .cfoot{display:flex;align-items:center;justify-content:space-between;}
 .rtag{font-size:11px;color:var(--mu);}
 .plink{font-family:'DM Mono',monospace;font-size:12px;color:var(--ac);text-decoration:none;padding:5px 11px;border:1px solid rgba(245,200,66,0.3);border-radius:7px;background:rgba(245,200,66,0.06);}
-
-/* LIST */
 .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:12px;}
 .stat{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:9px 5px;text-align:center;}
-.stat-num{font-size:19px;font-weight:700;font-family:'DM Mono',monospace;}
-.stat-lbl{font-size:10px;color:var(--mu);margin-top:1px;}
-.fsec{margin-bottom:10px;}
-.flbl{font-size:10px;color:var(--mu);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:6px;}
+.stat-num{font-size:19px;font-weight:700;font-family:'DM Mono',monospace;}.stat-lbl{font-size:10px;color:var(--mu);margin-top:1px;}
+.fsec{margin-bottom:10px;}.flbl{font-size:10px;color:var(--mu);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:6px;}
 .chips{display:flex;gap:5px;flex-wrap:wrap;}
 .chip{padding:5px 11px;border-radius:18px;border:1px solid var(--bd);background:var(--sf);color:var(--mu);font-size:12px;cursor:pointer;transition:all 0.15s;white-space:nowrap;font-family:'Noto Sans TC',sans-serif;}
 .chip.active{background:var(--ac);color:#1a1400;border-color:var(--ac);font-weight:700;}
@@ -107,61 +90,37 @@ body{background:var(--bg);color:var(--tx);font-family:'Noto Sans TC',sans-serif;
 .tp-btn{padding:5px 13px;border-radius:18px;border:1px solid var(--bd);background:var(--sf);color:var(--mu);font-size:12px;cursor:pointer;font-family:'Noto Sans TC',sans-serif;}
 .tp-btn.on{color:var(--ac);border-color:rgba(245,200,66,0.4);}
 .empty{text-align:center;padding:48px 20px;color:var(--mu);}
-
-/* SETTINGS */
 .sc{background:var(--sf);border:1px solid var(--bd);border-radius:11px;padding:14px;margin-bottom:11px;}
 .st{font-size:13px;font-weight:700;margin-bottom:10px;}
 .sr{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--bd);font-size:13px;}
-.sr:last-child{border-bottom:none;}
-.sk{color:var(--mu);}
-.sv{font-family:'DM Mono',monospace;}
+.sr:last-child{border-bottom:none;}.sk{color:var(--mu);}.sv{font-family:'DM Mono',monospace;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
 ::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:2px;}
-
-/* 密碼鎖 */
-.lock{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:32px;}
-.lock-logo{width:64px;height:64px;border-radius:16px;background:var(--ac);display:flex;align-items:center;justify-content:center;font-size:36px;}
-.lock-title{font-size:18px;font-weight:700;color:var(--tx);}
-.lock-sub{font-size:13px;color:var(--mu);text-align:center;}
-.lock-dots{display:flex;gap:14px;margin:8px 0;}
-.lock-dot{width:14px;height:14px;border-radius:50%;border:2px solid var(--bd2);transition:all 0.15s;}
-.lock-dot.filled{background:var(--ac);border-color:var(--ac);}
-.lock-dot.error{background:#e55;border-color:#e55;}
-.lock-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:240px;}
-.lock-btn{height:62px;border-radius:14px;border:1px solid var(--bd);background:var(--sf);color:var(--tx);font-size:22px;font-weight:500;cursor:pointer;font-family:'Noto Sans TC',sans-serif;transition:all 0.1s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;}
-.lock-btn:active{background:var(--sf2);transform:scale(0.95);}
-.lock-btn .sub{font-size:8px;color:var(--mu);letter-spacing:0.1em;}
-.lock-btn.del{font-size:18px;color:var(--mu);}
-.lock-err{font-size:13px;color:#e77;height:18px;text-align:center;}
 </style>
 </head>
 <body>
-
-<!-- 密碼鎖 -->
 <div class="lock" id="lockScreen">
   <div class="lock-logo">🪀</div>
   <div class="lock-title">陀螺比賽行程表</div>
   <div class="lock-sub">請輸入密碼</div>
-  <div class="lock-dots" id="lockDots">
-    <div class="lock-dot" id="d0"></div>
-    <div class="lock-dot" id="d1"></div>
-    <div class="lock-dot" id="d2"></div>
-    <div class="lock-dot" id="d3"></div>
+  <div class="lock-dots">
+    <div class="lock-dot" id="d0"></div><div class="lock-dot" id="d1"></div>
+    <div class="lock-dot" id="d2"></div><div class="lock-dot" id="d3"></div>
   </div>
   <div class="lock-err" id="lockErr"></div>
   <div class="lock-pad">
-    <button class="lock-btn" onclick="lockInput('1')">1</button>
-    <button class="lock-btn" onclick="lockInput('2')">2<div class="sub">ABC</div></button>
-    <button class="lock-btn" onclick="lockInput('3')">3<div class="sub">DEF</div></button>
-    <button class="lock-btn" onclick="lockInput('4')">4<div class="sub">GHI</div></button>
-    <button class="lock-btn" onclick="lockInput('5')">5<div class="sub">JKL</div></button>
-    <button class="lock-btn" onclick="lockInput('6')">6<div class="sub">MNO</div></button>
-    <button class="lock-btn" onclick="lockInput('7')">7<div class="sub">PQRS</div></button>
-    <button class="lock-btn" onclick="lockInput('8')">8<div class="sub">TUV</div></button>
-    <button class="lock-btn" onclick="lockInput('9')">9<div class="sub">WXYZ</div></button>
+    <button class="lock-btn" onclick="lkIn('1')">1</button>
+    <button class="lock-btn" onclick="lkIn('2')">2<div class="sub">ABC</div></button>
+    <button class="lock-btn" onclick="lkIn('3')">3<div class="sub">DEF</div></button>
+    <button class="lock-btn" onclick="lkIn('4')">4<div class="sub">GHI</div></button>
+    <button class="lock-btn" onclick="lkIn('5')">5<div class="sub">JKL</div></button>
+    <button class="lock-btn" onclick="lkIn('6')">6<div class="sub">MNO</div></button>
+    <button class="lock-btn" onclick="lkIn('7')">7<div class="sub">PQRS</div></button>
+    <button class="lock-btn" onclick="lkIn('8')">8<div class="sub">TUV</div></button>
+    <button class="lock-btn" onclick="lkIn('9')">9<div class="sub">WXYZ</div></button>
     <div></div>
-    <button class="lock-btn" onclick="lockInput('0')">0</button>
-    <button class="lock-btn del" onclick="lockDel()">⌫</button>
+    <button class="lock-btn" onclick="lkIn('0')">0</button>
+    <button class="lock-btn del" onclick="lkDel()">⌫</button>
   </div>
 </div>
 
@@ -169,7 +128,7 @@ body{background:var(--bg);color:var(--tx);font-family:'Noto Sans TC',sans-serif;
   <div class="logo">🪀</div>
   <div class="hdr-info">
     <div class="hdr-title">陀螺比賽行程表</div>
-    <div class="hdr-sub" id="hdrSub">台中・彰化 2026</div>
+    <div class="hdr-sub">台中・彰化 2026</div>
   </div>
   <div class="sw">
     <span class="si">🔍</span>
@@ -186,15 +145,14 @@ body{background:var(--bg);color:var(--tx);font-family:'Noto Sans TC',sans-serif;
 </div>
 
 <div>
-  <!-- 行事曆 -->
   <div class="view active" id="view-cal">
     <div class="cal-wrap">
       <div class="cal-top">
-        <button class="cal-nb" onclick="prevMo()">‹</button>
+        <button class="cal-nb" onclick="prevMo()">&#8249;</button>
         <div class="cal-title" id="calTitle"></div>
-        <button class="cal-nb" onclick="nextMo()">›</button>
+        <button class="cal-nb" onclick="nextMo()">&#8250;</button>
       </div>
-      <div class="cal-region-chips" id="calChips"></div>
+      <div class="cal-chips" id="calChips"></div>
       <div class="cal-head">
         <div class="cal-dow">日</div><div class="cal-dow">一</div><div class="cal-dow">二</div>
         <div class="cal-dow">三</div><div class="cal-dow">四</div><div class="cal-dow">五</div><div class="cal-dow">六</div>
@@ -203,13 +161,16 @@ body{background:var(--bg);color:var(--tx);font-family:'Noto Sans TC',sans-serif;
     </div>
   </div>
 
-  <!-- 賽事列表 -->
   <div class="view" id="view-list">
     <div class="main">
       <div class="stats-row" id="statsRow"></div>
       <div class="fsec">
         <div class="flbl">地區</div>
-        <div class="chips" id="regionChips"></div>
+        <div class="chips">
+          <button class="chip active" data-region="all" onclick="setF('region','all')">全部</button>
+          <button class="chip" data-region="台中" onclick="setF('region','台中')">台中</button>
+          <button class="chip" data-region="彰化" onclick="setF('region','彰化')">彰化</button>
+        </div>
       </div>
       <div class="fsec">
         <div class="flbl">報名方式</div>
@@ -231,12 +192,12 @@ body{background:var(--bg);color:var(--tx);font-family:'Noto Sans TC',sans-serif;
     </div>
   </div>
 
-  <!-- 設定 -->
   <div class="view" id="view-set">
     <div class="main">
       <div class="sc">
         <div class="st">關於</div>
-        <div class="sr"><span class="sk">版本</span><span class="sv">2.0.0</span></div>
+        <div class="sr"><span class="sk">版本</span><span class="sv">2.1.0</span></div>
+        <div class="sr"><span class="sk">地區</span><span class="sv">台中・彰化</span></div>
         <div class="sr"><span class="sk">賽季</span><span class="sv">2026年6月</span></div>
         <div class="sr"><span class="sk">場次總數</span><span class="sv" id="totalCount">-</span></div>
       </div>
@@ -258,293 +219,148 @@ body{background:var(--bg);color:var(--tx);font-family:'Noto Sans TC',sans-serif;
 </nav>
 
 <script>
-// ── 密碼鎖 ──
-const PWD = '0621';
-let lockInput_buf = '';
+const PWD='0621'; let lkBuf='';
+function chkLock(){if(localStorage.getItem('unlocked')==='yes')document.getElementById('lockScreen').style.display='none';}
+function lkIn(n){if(lkBuf.length>=4)return;lkBuf+=n;updDots();if(lkBuf.length===4)setTimeout(chkPwd,150);}
+function lkDel(){lkBuf=lkBuf.slice(0,-1);updDots();document.getElementById('lockErr').textContent='';}
+function updDots(){for(let i=0;i<4;i++){const d=document.getElementById('d'+i);d.classList.remove('filled','error');if(i<lkBuf.length)d.classList.add('filled');}}
+function chkPwd(){if(lkBuf===PWD){localStorage.setItem('unlocked','yes');document.getElementById('lockScreen').style.display='none';}else{for(let i=0;i<4;i++)document.getElementById('d'+i).classList.replace('filled','error');document.getElementById('lockErr').textContent='密碼錯誤，請重試';setTimeout(()=>{lkBuf='';updDots();document.getElementById('lockErr').textContent='';},900);}}
+chkLock();
 
-function checkLock(){
-  if(localStorage.getItem('unlocked')==='yes'){
-    document.getElementById('lockScreen').style.display='none';
-  }
-}
-
-function lockInput(n){
-  if(lockInput_buf.length>=4) return;
-  lockInput_buf += n;
-  updateDots();
-  if(lockInput_buf.length===4) setTimeout(checkPwd, 150);
-}
-
-function lockDel(){
-  lockInput_buf = lockInput_buf.slice(0,-1);
-  updateDots();
-  document.getElementById('lockErr').textContent='';
-}
-
-function updateDots(){
-  for(let i=0;i<4;i++){
-    const dot=document.getElementById('d'+i);
-    dot.classList.remove('filled','error');
-    if(i<lockInput_buf.length) dot.classList.add('filled');
-  }
-}
-
-function checkPwd(){
-  if(lockInput_buf===PWD){
-    localStorage.setItem('unlocked','yes');
-    document.getElementById('lockScreen').style.display='none';
-  } else {
-    for(let i=0;i<4;i++) document.getElementById('d'+i).classList.replace('filled','error');
-    document.getElementById('lockErr').textContent='密碼錯誤，請重試';
-    setTimeout(()=>{
-      lockInput_buf='';
-      updateDots();
-      document.getElementById('lockErr').textContent='';
-    },900);
-  }
-}
-
-checkLock();
-
-// ════════════════════════════════
-// 資料：只保留6月、公開組
-// region: 台中/彰化/南投/其他
-// ════════════════════════════════
-const ALL = [
-  // ── 台中地區 ──
-  {store:'RiRiCO',         date:'2026/6/3',  time:'19:30',cap:32, reg:'現場',    addr:'台中市北屯區北屯路288號B1',          region:'台中',phone:'0986-948-303'},
-  {store:'RiRiCO',         date:'2026/6/10', time:'19:30',cap:32, reg:'現場',    addr:'台中市北屯區北屯路288號B1',          region:'台中',phone:'0986-948-303'},
-  {store:'RiRiCO',         date:'2026/6/17', time:'19:30',cap:32, reg:'現場',    addr:'台中市北屯區北屯路288號B1',          region:'台中',phone:'0986-948-303'},
-  {store:'RiRiCO',         date:'2026/6/24', time:'19:30',cap:32, reg:'現場',    addr:'台中市北屯區北屯路288號B1',          region:'台中',phone:'0986-948-303'},
-  {store:'玩具e哥台中文心', date:'2026/6/20', time:'15:30',cap:24, reg:'現場',    addr:'台中市北屯區文心路四段225號',         region:'台中',phone:'(04)3707-6188'},
-  {store:'鼎美玩具 金典綠園道',date:'2026/6/6',time:'13:00',cap:16,reg:'現場',   addr:'台中市西區健行路1049號6樓',           region:'台中',phone:'(04)3707-3966'},
-  {store:'SN玩具行',        date:'2026/6/6',  time:'13:00',cap:16, reg:'門市社群',addr:'台中市北屯區東山路一段147之3號',      region:'台中',phone:'0988-451545'},
-  {store:'SN玩具行',        date:'2026/6/27', time:'13:00',cap:16, reg:'門市社群',addr:'台中市北屯區東山路一段147之3號',      region:'台中',phone:'0988-451545'},
-  {store:'星玩具',          date:'2026/6/6',  time:'11:00',cap:16, reg:'線上',    addr:'台中市太平區旱溪東路一段590號',       region:'台中',phone:'04-23954590'},
-  {store:'星玩具',          date:'2026/6/20', time:'11:00',cap:16, reg:'線上',    addr:'台中市太平區旱溪東路一段590號',       region:'台中',phone:'04-23954591'},
-  {store:'獵模士',          date:'2026/6/7',  time:'14:00',cap:32, reg:'皆可',    addr:'台中市西屯區西安街191號',             region:'台中',phone:'0989-454422'},
-  {store:'獵模士',          date:'2026/6/21', time:'14:00',cap:32, reg:'皆可',    addr:'台中市西屯區西安街191號',             region:'台中',phone:'0989-454422'},
-  {store:'唐采-潭子店',     date:'2026/6/6',  time:'14:00',cap:16, reg:'線上',    addr:'台中市潭子區中山路三段17號',          region:'台中',phone:'0979-360209'},
-  {store:'唐采-河北店',     date:'2026/6/13', time:'14:00',cap:16, reg:'線上',    addr:'台中市北屯區河北路二段71號',          region:'台中',phone:'0901-360209'},
-  {store:'唐采-樂成店',     date:'2026/6/20', time:'14:00',cap:16, reg:'線上',    addr:'台中市東區育英路90號',                region:'台中',phone:'0979-598871'},
-  {store:'森森文具玩具',    date:'2026/6/7',  time:'15:00',cap:32, reg:'線上',    addr:'台中市后里區成功路356號',             region:'台中',phone:'(04)2558-9226'},
-  {store:'森森文具玩具',    date:'2026/6/14', time:'15:00',cap:32, reg:'線上',    addr:'台中市后里區成功路356號',             region:'台中',phone:'(04)2558-9226'},
-  {store:'北區城堡',        date:'2026/6/14', time:'18:00',cap:16, reg:'線上+現場',addr:'台中市北區三民路三段356號',          region:'台中',phone:'0907-207995'},
-  {store:'北區城堡',        date:'2026/6/21', time:'18:00',cap:16, reg:'線上+現場',addr:'台中市北區三民路三段356號',          region:'台中',phone:'0907-207995'},
-  {store:'北區城堡',        date:'2026/6/28', time:'18:00',cap:16, reg:'線上+現場',addr:'台中市北區三民路三段356號',          region:'台中',phone:'0907-207995'},
-  {store:'南區愛買',        date:'2026/6/6',  time:'17:00',cap:16, reg:'線上+現場',addr:'台中市南區復興路一段359號2F',        region:'台中',phone:'0918-025691'},
-  {store:'南區愛買',        date:'2026/6/20', time:'17:00',cap:16, reg:'線上+現場',addr:'台中市南區復興路一段359號2F',        region:'台中',phone:'0918-025691'},
-  {store:'豐原',            date:'2026/6/5',  time:'19:00',cap:16, reg:'線上+現場',addr:'台中市豐原區豐陽路92號',             region:'台中',phone:'04-25131373'},
-  {store:'豐原',            date:'2026/6/26', time:'19:00',cap:16, reg:'線上+現場',addr:'台中市豐原區豐陽路92號',             region:'台中',phone:'04-25131373'},
-  {store:'后里',            date:'2026/6/6',  time:'19:00',cap:16, reg:'線上+現場',addr:'台中市后里區成功路373號',             region:'台中',phone:'0912-841008'},
-  {store:'后里',            date:'2026/6/27', time:'19:00',cap:16, reg:'線上+現場',addr:'台中市后里區成功路373號',             region:'台中',phone:'0912-841008'},
-  // ── 彰化地區 ──
-  {store:'大利市員林',      date:'2026/6/20', time:'14:00',cap:32, reg:'現場',    addr:'彰化縣員林市溝皂東街32號',            region:'彰化',phone:'04-8343399'},
-  {store:'遛小孩',          date:'2026/6/7',  time:'15:00',cap:32, reg:'皆可',    addr:'彰化縣彰化市茄苳路一段303巷106-1號',  region:'彰化',phone:'04-7280556'},
-  {store:'遛小孩',          date:'2026/6/21', time:'15:00',cap:32, reg:'皆可',    addr:'彰化縣彰化市茄苳路一段303巷106-1號',  region:'彰化',phone:'04-7280556'},
-  {store:'員林',            date:'2026/6/3',  time:'18:30',cap:16, reg:'線上+現場',addr:'彰化縣員林市至善街30號',             region:'彰化',phone:'04-8363602'},
-  {store:'員林',            date:'2026/6/10', time:'18:30',cap:16, reg:'線上+現場',addr:'彰化縣員林市至善街30號',             region:'彰化',phone:'04-8363602'},
-  {store:'來玩聚彰化家樂福',date:'2026/6/28', time:'15:00',cap:16, reg:'門市社群',addr:'彰化市金馬路2段321號2樓',             region:'彰化',phone:'04-7357475'},
-  // ── 南投地區（文件中無，預留） ──
+const ALL=[
+  {store:'RiRiCO',date:'2026/6/3',time:'19:30',cap:32,reg:'現場',addr:'台中市北屯區北屯路288號B1',region:'台中',phone:'0986-948-303'},
+  {store:'RiRiCO',date:'2026/6/10',time:'19:30',cap:32,reg:'現場',addr:'台中市北屯區北屯路288號B1',region:'台中',phone:'0986-948-303'},
+  {store:'RiRiCO',date:'2026/6/17',time:'19:30',cap:32,reg:'現場',addr:'台中市北屯區北屯路288號B1',region:'台中',phone:'0986-948-303'},
+  {store:'RiRiCO',date:'2026/6/24',time:'19:30',cap:32,reg:'現場',addr:'台中市北屯區北屯路288號B1',region:'台中',phone:'0986-948-303'},
+  {store:'玩具e哥台中文心',date:'2026/6/20',time:'15:30',cap:24,reg:'現場',addr:'台中市北屯區文心路四段225號',region:'台中',phone:'(04)3707-6188'},
+  {store:'鼎美玩具 金典綠園道',date:'2026/6/6',time:'13:00',cap:16,reg:'現場',addr:'台中市西區健行路1049號6樓',region:'台中',phone:'(04)3707-3966'},
+  {store:'SN玩具行',date:'2026/6/6',time:'13:00',cap:16,reg:'門市社群',addr:'台中市北屯區東山路一段147之3號',region:'台中',phone:'0988-451545'},
+  {store:'SN玩具行',date:'2026/6/27',time:'13:00',cap:16,reg:'門市社群',addr:'台中市北屯區東山路一段147之3號',region:'台中',phone:'0988-451545'},
+  {store:'星玩具',date:'2026/6/6',time:'11:00',cap:16,reg:'線上',addr:'台中市太平區旱溪東路一段590號',region:'台中',phone:'04-23954590'},
+  {store:'星玩具',date:'2026/6/20',time:'11:00',cap:16,reg:'線上',addr:'台中市太平區旱溪東路一段590號',region:'台中',phone:'04-23954591'},
+  {store:'獵模士',date:'2026/6/7',time:'14:00',cap:32,reg:'皆可',addr:'台中市西屯區西安街191號',region:'台中',phone:'0989-454422'},
+  {store:'獵模士',date:'2026/6/21',time:'14:00',cap:32,reg:'皆可',addr:'台中市西屯區西安街191號',region:'台中',phone:'0989-454422'},
+  {store:'唐采-潭子店',date:'2026/6/6',time:'14:00',cap:16,reg:'線上',addr:'台中市潭子區中山路三段17號',region:'台中',phone:'0979-360209'},
+  {store:'唐采-河北店',date:'2026/6/13',time:'14:00',cap:16,reg:'線上',addr:'台中市北屯區河北路二段71號',region:'台中',phone:'0901-360209'},
+  {store:'唐采-樂成店',date:'2026/6/20',time:'14:00',cap:16,reg:'線上',addr:'台中市東區育英路90號',region:'台中',phone:'0979-598871'},
+  {store:'森森文具玩具',date:'2026/6/7',time:'15:00',cap:32,reg:'線上',addr:'台中市后里區成功路356號',region:'台中',phone:'(04)2558-9226'},
+  {store:'森森文具玩具',date:'2026/6/14',time:'15:00',cap:32,reg:'線上',addr:'台中市后里區成功路356號',region:'台中',phone:'(04)2558-9226'},
+  {store:'北區城堡',date:'2026/6/14',time:'18:00',cap:16,reg:'線上+現場',addr:'台中市北區三民路三段356號',region:'台中',phone:'0907-207995'},
+  {store:'北區城堡',date:'2026/6/21',time:'18:00',cap:16,reg:'線上+現場',addr:'台中市北區三民路三段356號',region:'台中',phone:'0907-207995'},
+  {store:'北區城堡',date:'2026/6/28',time:'18:00',cap:16,reg:'線上+現場',addr:'台中市北區三民路三段356號',region:'台中',phone:'0907-207995'},
+  {store:'南區愛買',date:'2026/6/6',time:'17:00',cap:16,reg:'線上+現場',addr:'台中市南區復興路一段359號2F',region:'台中',phone:'0918-025691'},
+  {store:'南區愛買',date:'2026/6/20',time:'17:00',cap:16,reg:'線上+現場',addr:'台中市南區復興路一段359號2F',region:'台中',phone:'0918-025691'},
+  {store:'豐原',date:'2026/6/5',time:'19:00',cap:16,reg:'線上+現場',addr:'台中市豐原區豐陽路92號',region:'台中',phone:'04-25131373'},
+  {store:'豐原',date:'2026/6/26',time:'19:00',cap:16,reg:'線上+現場',addr:'台中市豐原區豐陽路92號',region:'台中',phone:'04-25131373'},
+  {store:'后里',date:'2026/6/6',time:'19:00',cap:16,reg:'線上+現場',addr:'台中市后里區成功路373號',region:'台中',phone:'0912-841008'},
+  {store:'后里',date:'2026/6/27',time:'19:00',cap:16,reg:'線上+現場',addr:'台中市后里區成功路373號',region:'台中',phone:'0912-841008'},
+  {store:'大利市員林',date:'2026/6/20',time:'14:00',cap:32,reg:'現場',addr:'彰化縣員林市溝皂東街32號',region:'彰化',phone:'04-8343399'},
+  {store:'遛小孩',date:'2026/6/7',time:'15:00',cap:32,reg:'皆可',addr:'彰化縣彰化市茄苳路一段303巷106-1號',region:'彰化',phone:'04-7280556'},
+  {store:'遛小孩',date:'2026/6/21',time:'15:00',cap:32,reg:'皆可',addr:'彰化縣彰化市茄苳路一段303巷106-1號',region:'彰化',phone:'04-7280556'},
+  {store:'員林',date:'2026/6/3',time:'18:30',cap:16,reg:'線上+現場',addr:'彰化縣員林市至善街30號',region:'彰化',phone:'04-8363602'},
+  {store:'員林',date:'2026/6/10',time:'18:30',cap:16,reg:'線上+現場',addr:'彰化縣員林市至善街30號',region:'彰化',phone:'04-8363602'},
+  {store:'來玩聚彰化家樂福',date:'2026/6/28',time:'15:00',cap:16,reg:'門市社群',addr:'彰化市金馬路2段321號2樓',region:'彰化',phone:'04-7357475'},
+  {store:'玩具無雙X黑傑克愛買',date:'2026/6/13',time:'15:00',cap:32,reg:'皆可',addr:'彰化縣員林市浮圳路二段499號',region:'彰化',phone:'0903-570-422'},
+  {store:'玩具無雙X黑傑克愛買',date:'2026/6/27',time:'15:00',cap:32,reg:'皆可',addr:'彰化縣員林市浮圳路二段499號',region:'彰化',phone:'0903-570-422'},
+  {store:'唐采-彰化店',date:'2026/6/20',time:'14:00',cap:16,reg:'線上',addr:'彰化縣彰化市中山路二段333號',region:'彰化',phone:'0979-598871'},
 ];
 
-// 日期排序用整數
+const WD=['日','一','二','三','四','五','六'];
+const RC={台中:'tc',彰化:'ch'};
+let F={region:'all',reg:'all'},calR='台中',calY=2026,calM=5,hidePast=false;
+
 function d2i(s){const[y,m,d]=s.split('/').map(Number);return y*10000+m*100+d;}
-function isPast(e){const n=new Date();const t=n.getFullYear()*10000+(n.getMonth()+1)*100+n.getDate();return d2i(e.date)<t;}
+function isPast(e){const n=new Date();return d2i(e.date)<n.getFullYear()*10000+(n.getMonth()+1)*100+n.getDate();}
 function parseDate(s){const[y,m,d]=s.split('/').map(Number);return new Date(y,m-1,d);}
 
-const REGIONS = ['台中','彰化'];
-const REGION_COLORS = {台中:'tc',彰化:'ch'};
-const WD=['日','一','二','三','四','五','六'];
+document.getElementById('calChips').innerHTML=['台中','彰化'].map(r=>`<button class="cal-chip${r===calR?' active':''}" onclick="setCalR('${r}')">${r}</button>`).join('');
 
-let F={region:'台中',reg:'all'};
-let calRegion='台中';
-let calYear=2026, calMonth=5;
-let hidePast=false;
+function setF(k,v){F[k]=v;document.querySelectorAll('[data-'+k+']').forEach(b=>b.classList.toggle('active',b.dataset[k]===v));render();}
+function setCalR(r){calR=r;document.querySelectorAll('.cal-chip').forEach(b=>b.classList.toggle('active',b.textContent===r));renderCal();}
+function togglePast(){hidePast=!hidePast;const btn=document.getElementById('tpBtn');btn.textContent=hidePast?'🚫 已隱藏':'👁 顯示';btn.classList.toggle('on',hidePast);render();}
+function switchView(v){document.querySelectorAll('.view').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.nb').forEach(e=>e.classList.remove('active'));document.getElementById('view-'+v).classList.add('active');document.getElementById('nav-'+v).classList.add('active');if(v==='cal')renderCal();if(v==='list')render();}
 
-// ── 初始化地區chips ──
-function initChips(){
-  // 列表地區
-  document.getElementById('regionChips').innerHTML=
-    `<button class="chip active" data-region="all" onclick="setF('region','all')">全部</button>`+
-    REGIONS.map(r=>`<button class="chip" data-region="${r}" onclick="setF('region','${r}')">${r}</button>`).join('');
-  // 行事曆地區
-  document.getElementById('calChips').innerHTML=
-    REGIONS.map(r=>`<button class="cal-chip${calRegion===r?' active':''}" onclick="setCalRegion('${r}')">${r}</button>`).join('');
-}
-
-function setF(k,v){
-  F[k]=v;
-  if(k==='region') document.querySelectorAll('[data-region]').forEach(b=>b.classList.toggle('active',b.dataset.region===v));
-  if(k==='reg') document.querySelectorAll('[data-reg]').forEach(b=>b.classList.toggle('active',b.dataset.reg===v));
-  render();
-}
-function setCalRegion(r){
-  calRegion=r;
-  document.querySelectorAll('.cal-chip').forEach(b=>b.classList.toggle('active',b.textContent===r));
-  renderCal();
-}
-function togglePast(){
-  hidePast=!hidePast;
-  const btn=document.getElementById('tpBtn');
-  btn.textContent=hidePast?'🚫 已隱藏':'👁 顯示';
-  btn.classList.toggle('on',hidePast);
-  render();
-}
-function switchView(v){
-  document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));
-  document.querySelectorAll('.nb').forEach(el=>el.classList.remove('active'));
-  document.getElementById('view-'+v).classList.add('active');
-  document.getElementById('nav-'+v).classList.add('active');
-  if(v==='cal') renderCal();
-  if(v==='list') render();
-}
-
-// ── 卡片 ──
 function cardHTML(e,i){
-  const d=parseDate(e.date);
-  const wd=WD[d.getDay()];
-  const md=e.date.replace('2026/','');
-  const rc='bdg-'+(REGION_COLORS[e.region]||'ot');
-  const past=isPast(e);
-  const regC={現場:'#e8834a',線上:'#5b9cf6','線上+現場':'#a8c4f8',門市社群:'#c77dff',皆可:'#52c87a',電話:'#f5c842'};
-  const rc2=regC[e.reg]||'var(--mu)';
-  return `<div class="card${past?' past':''}" style="animation:fadeUp 0.2s ${i*0.025}s ease both;">
-    <div class="chead">
-      <div class="sname">${e.store}</div>
-      <div class="bdgs">
-        <span class="bdg ${rc}">${e.region}</span>
-        <span class="bdg bdg-open">公開 6歲↑</span>
-        ${past?'<span class="bdg bdg-past">已結束</span>':''}
-      </div>
-    </div>
-    <div class="cinfo">
-      <span class="ci">📅 ${md}（${wd}）</span>
-      <span class="ci">🕐 ${e.time}</span>
-      <span class="ci">👥 ${e.cap}人</span>
-    </div>
-    <div class="caddr">📍 ${e.addr}</div>
-    <div class="cfoot">
-      <span class="rtag" style="color:${rc2}">● ${e.reg}</span>
-      ${past?'<span style="font-size:11px;color:var(--mu)">已結束</span>':`<a class="plink" href="tel:${e.phone.replace(/[^\d]/g,'')}">${e.phone}</a>`}
-    </div>
-  </div>`;
+  const d=parseDate(e.date),wd=WD[d.getDay()],md=e.date.replace('2026/',''),past=isPast(e);
+  const rc='bdg-'+(RC[e.region]||'tc');
+  const rC={現場:'#e8834a',線上:'#5b9cf6','線上+現場':'#a8c4f8',門市社群:'#c77dff',皆可:'#52c87a',電話:'#f5c842'};
+  return '<div class="card'+(past?' past':'')+'" style="animation:fadeUp 0.2s '+(i*0.025)+'s ease both;">'
+    +'<div class="chead"><div class="sname">'+e.store+'</div>'
+    +'<div class="bdgs"><span class="bdg '+rc+'">'+e.region+'</span><span class="bdg bdg-open">公開 6歲↑</span>'+(past?'<span class="bdg bdg-past">已結束</span>':'')+'</div></div>'
+    +'<div class="cinfo"><span class="ci">📅 '+md+'（'+wd+'）</span><span class="ci">🕐 '+e.time+'</span><span class="ci">👥 '+e.cap+'人</span></div>'
+    +'<div class="caddr">📍 '+e.addr+'</div>'
+    +'<div class="cfoot"><span class="rtag" style="color:'+(rC[e.reg]||'var(--mu)')+'">● '+e.reg+'</span>'
+    +(past?'<span style="font-size:11px;color:var(--mu)">已結束</span>':'<a class="plink" href="tel:'+e.phone.replace(/[^\d]/g,'')+'">'+e.phone+'</a>')
+    +'</div></div>';
 }
 
-// ── 列表 ──
 function render(){
   const q=document.getElementById('searchInput').value.toLowerCase();
   const data=ALL.filter(e=>{
     if(F.region!=='all'&&e.region!==F.region)return false;
     if(F.reg!=='all'&&e.reg!==F.reg)return false;
     if(hidePast&&isPast(e))return false;
-    if(q&&!e.store.includes(q)&&!e.addr.includes(q)&&!e.region.includes(q))return false;
+    if(q&&!e.store.includes(q)&&!e.addr.includes(q))return false;
     return true;
+  }).sort((a,b)=>{
+    const pa=isPast(a)?1:0,pb=isPast(b)?1:0;
+    if(pa!==pb)return pa-pb;
+    const da=d2i(a.date),db=d2i(b.date);
+    return da!==db?da-db:a.time.localeCompare(b.time);
   });
-
-  // 強制排序：先用d2i數字排，已結束沉底
-  data.sort((a,b)=>{
-    const pa=isPast(a)?1:0, pb=isPast(b)?1:0;
-    if(pa!==pb) return pa-pb;
-    const da=d2i(a.date), db=d2i(b.date);
-    if(da!==db) return da-db;
-    return a.time.localeCompare(b.time);
-  });
-
-  const tc=data.filter(e=>e.region==='台中').length;
-  const ch=data.filter(e=>e.region==='彰化').length;
-  document.getElementById('statsRow').innerHTML=`
-    <div class="stat"><div class="stat-num">${data.length}</div><div class="stat-lbl">場次</div></div>
-    <div class="stat"><div class="stat-num" style="color:#5b9cf6">${tc}</div><div class="stat-lbl">台中</div></div>
-    <div class="stat"><div class="stat-num" style="color:#52c87a">${ch}</div><div class="stat-lbl">彰化</div></div>
-  `;
+  const tc=data.filter(e=>e.region==='台中').length,ch=data.filter(e=>e.region==='彰化').length;
+  document.getElementById('statsRow').innerHTML='<div class="stat"><div class="stat-num">'+data.length+'</div><div class="stat-lbl">場次</div></div><div class="stat"><div class="stat-num" style="color:#5b9cf6">'+tc+'</div><div class="stat-lbl">台中</div></div><div class="stat"><div class="stat-num" style="color:#52c87a">'+ch+'</div><div class="stat-lbl">彰化</div></div>';
   document.getElementById('totalCount').textContent=ALL.length+' 場';
-
   if(!data.length){document.getElementById('listContent').innerHTML='<div class="empty">🔍<br>找不到賽事</div>';return;}
-
-  // 依日期分組，順序跟data一樣
-  const dateOrder=[], byDate={};
+  const dateOrder=[],byDate={};
   data.forEach(e=>{if(!byDate[e.date]){byDate[e.date]=[];dateOrder.push(e.date);}byDate[e.date].push(e);});
-
   let i=0;
   document.getElementById('listContent').innerHTML=dateOrder.map(dk=>{
-    const d=parseDate(dk);
-    const wd=WD[d.getDay()];
-    const md=dk.replace('2026/','');
-    const pt=byDate[dk].every(e=>isPast(e));
-    return `<div class="dgrp">
-      <div class="dhdr"><div class="dline"></div><div class="dtag${pt?' pt':''}">${md}（${wd}）・${byDate[dk].length}場</div><div class="dline"></div></div>
-      ${byDate[dk].map(e=>cardHTML(e,i++)).join('')}
-    </div>`;
+    const d=parseDate(dk),wd=WD[d.getDay()],md=dk.replace('2026/',''),pt=byDate[dk].every(e=>isPast(e));
+    return '<div class="dgrp"><div class="dhdr"><div class="dline"></div><div class="dtag'+(pt?' pt':'')+'">'+md+'（'+wd+'）・'+byDate[dk].length+'場</div><div class="dline"></div></div>'+byDate[dk].map(e=>cardHTML(e,i++)).join('')+'</div>';
   }).join('');
 }
 
-// ── 行事曆 ──
 function renderCal(){
-  const today=new Date();
-  const y=calYear, m=calMonth;
+  const today=new Date(),y=calY,m=calM;
   const MN=['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
-  document.getElementById('calTitle').textContent=`${y}年 ${MN[m]}`;
-
+  document.getElementById('calTitle').textContent=y+'年 '+MN[m];
   const evMap={};
-  ALL.filter(e=>calRegion==='all'||e.region===calRegion).forEach(e=>{
-    if(!evMap[e.date])evMap[e.date]=[];
-    evMap[e.date].push(e);
-  });
-
-  const firstDay=new Date(y,m,1).getDay();
-  const daysInMonth=new Date(y,m+1,0).getDate();
-  const daysInPrev=new Date(y,m,0).getDate();
-  const totalCells=Math.ceil((firstDay+daysInMonth)/7)*7;
-  let cells='';
-
-  for(let i=0;i<totalCells;i++){
-    let day, dateObj, cur=true;
-    if(i<firstDay){day=daysInPrev-firstDay+i+1;dateObj=new Date(y,m-1,day);cur=false;}
-    else if(i>=firstDay+daysInMonth){day=i-firstDay-daysInMonth+1;dateObj=new Date(y,m+1,day);cur=false;}
-    else{day=i-firstDay+1;dateObj=new Date(y,m,day);}
-
+  ALL.filter(e=>e.region===calR).forEach(e=>{if(!evMap[e.date])evMap[e.date]=[];evMap[e.date].push(e);});
+  const fd=new Date(y,m,1).getDay(),dim=new Date(y,m+1,0).getDate(),dip=new Date(y,m,0).getDate();
+  const tot=Math.ceil((fd+dim)/7)*7;let cells='';
+  for(let i=0;i<tot;i++){
+    let day,dateObj,cur=true;
+    if(i<fd){day=dip-fd+i+1;dateObj=new Date(y,m-1,day);cur=false;}
+    else if(i>=fd+dim){day=i-fd-dim+1;dateObj=new Date(y,m+1,day);cur=false;}
+    else{day=i-fd+1;dateObj=new Date(y,m,day);}
     const isToday=dateObj.toDateString()===today.toDateString();
-    const dateStr=`${dateObj.getFullYear()}/${dateObj.getMonth()+1}/${dateObj.getDate()}`;
-    const evs=evMap[dateStr]||[];
-    const hasEv=evs.length>0;
-
+    const ds=dateObj.getFullYear()+'/'+(dateObj.getMonth()+1)+'/'+dateObj.getDate();
+    const evs=evMap[ds]||[],hasEv=evs.length>0;
     let pills='';
-    evs.slice(0,3).forEach(e=>{
-      const pc=isPast(e)?'past':(REGION_COLORS[e.region]||'other-r');
-      pills+=`<div class="cpill ${pc}" onclick="openMod('${dateStr}');event.stopPropagation();">${e.store}</div>`;
-    });
-    if(evs.length>3) pills+=`<div class="cmore">+${evs.length-3}</div>`;
-
-    cells+=`<div class="cal-cell${hasEv?' has-ev':''}${isToday?' today':''}${!cur?' other':''}"${hasEv?` onclick="openMod('${dateStr}')"`:''}><div class="cdate">${day}</div>${pills}</div>`;
+    evs.slice(0,3).forEach(e=>{const pc=isPast(e)?'past':(RC[e.region]||'tc');pills+='<div class="cpill '+pc+'" onclick="openMod(\''+ds+'\');event.stopPropagation();">'+e.store+'</div>';});
+    if(evs.length>3)pills+='<div class="cmore">+' +(evs.length-3)+'</div>';
+    cells+='<div class="cal-cell'+(hasEv?' has-ev':'')+(isToday?' today':'')+(cur?'':' other')+'"'+(hasEv?' onclick="openMod(\''+ds+'\')"':'')+'>'+
+      '<div class="cdate">'+day+'</div>'+pills+'</div>';
   }
   document.getElementById('calGrid').innerHTML=cells;
 }
 
-// ── Modal ──
-function openMod(dateStr){
-  const evs=ALL.filter(e=>e.date===dateStr&&(calRegion==='all'||e.region===calRegion)).sort((a,b)=>a.time.localeCompare(b.time));
+function openMod(ds){
+  const evs=ALL.filter(e=>e.date===ds&&e.region===calR).sort((a,b)=>a.time.localeCompare(b.time));
   if(!evs.length)return;
-  const d=parseDate(dateStr);
-  document.getElementById('mdate').textContent=`${dateStr.replace('2026/','')}（${WD[d.getDay()]}）· ${evs.length}場`;
+  const d=parseDate(ds);
+  document.getElementById('mdate').textContent=ds.replace('2026/','')+'（'+WD[d.getDay()]+'）· '+evs.length+'場';
   document.getElementById('mcontent').innerHTML=evs.map((e,i)=>cardHTML(e,i)).join('');
   document.getElementById('mbg').classList.add('open');
   document.body.style.overflow='hidden';
 }
-function closeMod(e){
-  if(e.target===document.getElementById('mbg')){
-    document.getElementById('mbg').classList.remove('open');
-    document.body.style.overflow='';
-  }
-}
-function prevMo(){calMonth--;if(calMonth<0){calMonth=11;calYear--;}renderCal();}
-function nextMo(){calMonth++;if(calMonth>11){calMonth=0;calYear++;}renderCal();}
+function closeMod(e){if(e.target===document.getElementById('mbg')){document.getElementById('mbg').classList.remove('open');document.body.style.overflow='';}}
+function prevMo(){calM--;if(calM<0){calM=11;calY--;}renderCal();}
+function nextMo(){calM++;if(calM>11){calM=0;calY++;}renderCal();}
 
-if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
-
-initChips();
-renderCal();
-render();
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+renderCal();render();
 </script>
 </body>
 </html>
